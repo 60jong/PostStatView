@@ -63,11 +63,15 @@ public class VelogStatsService {
         for (String postId : postIds) {
             String totalReadsJson = postWith(new VelogGetPostStatsRequest(postId), refreshToken);
 
-            JSONObject jsonObject = (JSONObject)parser.parse(totalReadsJson);
-            JSONObject data = (JSONObject) jsonObject.get("data");
-            JSONObject getStats = (JSONObject) data.get("getStats");
+            try {
+                JSONObject jsonObject = (JSONObject) parser.parse(totalReadsJson);
+                JSONObject data = (JSONObject) jsonObject.get("data");
+                JSONObject getStats = (JSONObject) data.get("getStats");
 
-            totalReads += (Long) getStats.get("total");
+                totalReads += (Long) getStats.get("total");
+            } catch (NullPointerException nullPointerException) {
+                return totalReads;
+            }
         }
 
         return totalReads;
