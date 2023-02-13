@@ -1,11 +1,15 @@
 package site.jongky.poststatsview.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import site.jongky.poststatsview.service.VelogStatsService;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,8 +27,15 @@ public class VelogStatsController {
     )
     public byte[] showPostStats(@RequestParam("username") String username,
                                 @RequestParam("refresh_token") String refreshToken) throws IOException, ParseException {
+        String statsViewImageFileName = String.format("statviewimages/%s-post-stats-view.png", username);
 
-        return statsViewMaker.makeStatsView(username, getPostsTotalReads(username, refreshToken));
+        try {
+            new FileInputStream(statsViewImageFileName);
+        } catch (FileNotFoundException exception) {
+            statsViewMaker.makeStatsView(username, getPostsTotalReads(username, refreshToken));
+        } finally {
+            return IOUtils.toByteArray(new FileInputStream(statsViewImageFileName));
+        }
     }
 
     public Long getPostsTotalReads(String username, String refreshToken) throws ParseException {

@@ -70,6 +70,7 @@ public class VelogStatsService {
 
                 totalReads += (Long) getStats.get("total");
             } catch (NullPointerException nullPointerException) {
+                System.err.println(nullPointerException);
                 return totalReads;
             }
         }
