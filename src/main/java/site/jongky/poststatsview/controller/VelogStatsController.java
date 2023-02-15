@@ -6,6 +6,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import site.jongky.poststatsview.service.VelogStatsService;
+import site.jongky.poststatsview.util.StatsViewMaker;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,12 +30,37 @@ public class VelogStatsController {
                                 @RequestParam("refresh_token") String refreshToken) throws IOException, ParseException {
         String statsViewImageFileName = String.format("statviewimages/%s-post-stats-view.png", username);
 
-        try {
-            new FileInputStream(statsViewImageFileName);
-        } catch (FileNotFoundException exception) {
+        // 이미지가 존재할 경우, 리턴 후 삭제
+        if (isStatViewExisting(statsViewImageFileName)) {
+            FileInputStream inputStream = new FileInputStream(statsViewImageFileName);
+            byte[] postStatsView = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+
+            // 이미지 삭제
+            File file = new File(statsViewImageFileName);
+            file.delete();
+
+            return postStatsView;
+        // 이미지가 존재하지 않을 경우, 이미지 생성 후 리턴
+        } else {
             statsViewMaker.makeStatsView(username, getPostsTotalReads(username, refreshToken));
-        } finally {
-            return IOUtils.toByteArray(new FileInputStream(statsViewImageFileName));
+            FileInputStream inputStream = new FileInputStream(statsViewImageFileName);
+            byte[] postStatsView = IOUtils.toByteArray(inputStream);
+            inputStream.close();
+
+            return postStatsView;
+        }
+    }
+
+    public boolean isStatViewExisting(String statsViewImageFileName) throws IOException {
+        try {
+            // 이미지 존재 여부 확인
+            new FileInputStream(statsViewImageFileName).close();
+            return true;
+        } catch (FileNotFoundException fileNotFoundException) {
+            return false;
+        } catch (IOException ioException) {
+            throw new IOException();
         }
     }
 
