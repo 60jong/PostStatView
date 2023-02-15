@@ -1,4 +1,4 @@
-package site.jongky.poststatsview.controller;
+package site.jongky.poststatsview.util;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
