@@ -19,6 +19,6 @@ public class ImageManagementFilter extends OncePerRequestFilter {
     }
 
     private void setCacheControl(HttpServletResponse response) {
-        response.addHeader("Cache-Control", "no-cache");
+        response.addHeader("Cache-Control", "max-age=3600");
     }
 }
