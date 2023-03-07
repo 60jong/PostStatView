@@ -1,12 +1,12 @@
-package site.jongky.poststatsview.controller;
+package site.jongky.poststatview.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.parser.ParseException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import site.jongky.poststatsview.service.VelogStatsService;
-import site.jongky.poststatsview.util.StatsViewMaker;
+import site.jongky.poststatview.service.VelogStatService;
+import site.jongky.poststatview.util.StatViewMaker;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,9 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/velog-stats")
-public class VelogStatsController {
-    private final VelogStatsService velogStatsService;
-    private final StatsViewMaker statsViewMaker;
+public class VelogStatController {
+    private final VelogStatService velogStatService;
+    private final StatViewMaker statViewMaker;
 
     // Velog Post Stats Image 반환
     @GetMapping(
@@ -43,7 +43,7 @@ public class VelogStatsController {
             return postStatsView;
         // 이미지가 존재하지 않을 경우, 이미지 생성 후 리턴
         } else {
-            statsViewMaker.makeStatsView(username, getPostsTotalReads(username, refreshToken));
+            statViewMaker.makeStatsView(username, getPostsTotalReads(username, refreshToken));
             FileInputStream inputStream = new FileInputStream(statsViewImageFileName);
             byte[] postStatsView = IOUtils.toByteArray(inputStream);
             inputStream.close();
@@ -65,9 +65,9 @@ public class VelogStatsController {
     }
 
     public Long getPostsTotalReads(String username, String refreshToken) throws ParseException {
-        List<String> postIds = velogStatsService.findAllPostIdsByUsername(username, refreshToken);
+        List<String> postIds = velogStatService.findAllPostIdsByUsername(username, refreshToken);
 
-        return velogStatsService.getTotalReads(postIds, refreshToken);
+        return velogStatService.getTotalReads(postIds, refreshToken);
     }
 
 

@@ -1,4 +1,4 @@
-package site.jongky.poststatsview.util;
+package site.jongky.poststatview.util;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 @Component
-public class StatsViewMaker {
-    private final String POST_STATS_VIEW_BACKGROUND_IMAGE_FILE_PATH = "statviewimages/post-stats-view-background.png";
-    private final String POST_STATS_VIEW_MADE_IMAGE_FILE_PATH = "statviewimages/%s-post-stats-view.png";
+public class StatViewMaker {
+    private final String POST_STATS_VIEW_BACKGROUND_IMAGE_FILE_PATH = "statviewimages/post-stat-view-background.png";
+    private final String POST_STATS_VIEW_MADE_IMAGE_FILE_PATH = "statviewimages/%s-post-stat-view.png";
 
     private final String POST_STATS_VIEW_SUBJECT_SUFFIX = "\'s velog Post Stats View";
     private final String POST_STATS_VIEW_TOTAL_READS_PREFIX = "Total Reads : ";

@@ -1,13 +1,13 @@
-package site.jongky.poststatsview;
+package site.jongky.poststatview;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PoststatsviewApplication {
+public class PostStatViewApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PoststatsviewApplication.class, args);
+		SpringApplication.run(PostStatViewApplication.class, args);
 	}
 
 }

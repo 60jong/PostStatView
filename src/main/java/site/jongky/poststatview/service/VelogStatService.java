@@ -1,4 +1,4 @@
-package site.jongky.poststatsview.service;
+package site.jongky.poststatview.service;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,15 +9,15 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import site.jongky.poststatsview.dto.VelogGetPostIdsRequest;
-import site.jongky.poststatsview.dto.VelogGetPostStatsRequest;
-import site.jongky.poststatsview.dto.VelogOperationRequest;
+import site.jongky.poststatview.dto.VelogGetPostIdsRequest;
+import site.jongky.poststatview.dto.VelogGetPostStatsRequest;
+import site.jongky.poststatview.dto.VelogOperationRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class VelogStatsService {
+public class VelogStatService {
     private static final String VELOG_GRAPHQL_URL = "https://v2cdn.velog.io/";
     private JSONParser parser = new JSONParser();
 
