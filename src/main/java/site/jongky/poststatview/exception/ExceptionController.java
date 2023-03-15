@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ExceptionController {
 
     @ExceptionHandler(PostStatViewException.class)
-    private String handlePostStatViewException(PostStatViewException exception) {
-        log.info(exception.getResponseStatus().name());
-
-        return new ResponseEntity<>();
+    private ResponseEntity<ResponseBodyDto> handlePostStatViewException(PostStatViewException exception) {
+        PostStatViewResponseStatus responseStatus = exception.getResponseStatus();
+        return ResponseEntity.ok(
+                new ResponseBodyDto(
+                        responseStatus.getCode(),
+                        responseStatus.getMessage()
+                )
+        );
     }
 }
