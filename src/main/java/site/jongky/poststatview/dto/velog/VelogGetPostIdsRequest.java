@@ -1,4 +1,4 @@
-package site.jongky.poststatview.dto;
+package site.jongky.poststatview.dto.velog;
 
 import lombok.AllArgsConstructor;
 
