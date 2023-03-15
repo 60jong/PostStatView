@@ -1,5 +1,11 @@
-- [x] 총 방문자 수 - refreshToken 입력 필요
-- [] 총 게시글 수
+- [x] 총 방문자 수 
+  - refreshToken 입력 필요
+    - accessToken 생명 주기 : 1시간 - 3600 sec
+    - refreshToken 생명 주기 : 30일 - 2592000 sec
+  - refreshToken 저장 기간 : 30일
+- [x] 총 게시글 수
+  - default
 - [] 총 좋아요 수
 - [] 총 댓글 수
-- [] 게시글 태그 종류
+- [x] 게시글 태그 종류
+  - default
