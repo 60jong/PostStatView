@@ -126,7 +126,6 @@ public class VelogStatService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.postForEntity(VELOG_GRAPHQL_URL, entity, String.class);
 
-        System.out.println(response.getBody());
         validate(response.getBody());
         return response.getBody();
     }
