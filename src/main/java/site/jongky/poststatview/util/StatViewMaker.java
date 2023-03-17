@@ -86,23 +86,41 @@ public class StatViewMaker {
     }
 
     private void writeUsername(String username) {
-        graphics.setFont(new Font("NanumGothic", Font.BOLD, 17));
-        graphics.drawString(username + POST_STAT_VIEW_SUBJECT_SUFFIX, 85, 50);
-    }
+        graphics.setFont(new Font("맑은고딕", Font.BOLD, 19));
 
-    private void writeVisitors(Long visitors) {
-        graphics.setFont(new Font("NanumGothic", Font.PLAIN, 15));
-        graphics.drawString(POST_STAT_VIEW_VISITORS_PREFIX + visitors, 30, 140);
+        graphics.setColor(new Color(226,240,217));
+        graphics.drawString(username, 20, 40);
+        int usernameWidth = graphics.getFontMetrics().stringWidth(username);
+
+        graphics.setColor(Color.WHITE);
+        graphics.drawString("'s velog Stats", 20 + usernameWidth, 40);
     }
 
     private void writePosts(int posts) {
-        graphics.setFont(new Font("NanumGothic", Font.PLAIN, 15));
-        graphics.drawString(POST_STAT_VIEW_POSTS_PREFIX + posts, 30, 80);
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        graphics.drawString("Total Posts :", 15, 80);
+
+        graphics.setColor(new Color(226,240,217));
+        graphics.drawString(String.valueOf(posts), 170, 80);
     }
 
     private void writeTags(List<String> tags) {
-        String tagSentence = String.join(", ", tags);
-        graphics.setFont(new Font("NanumGothic", Font.PLAIN, 15));
-        graphics.drawString(POST_STAT_VIEW_TAGS_PREFIX + tagSentence, 30, 110);
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        graphics.drawString("Tags (most 3) :", 15, 120);
+
+        String tagSentence = String.join(" / ", tags);
+        graphics.setColor(new Color(226,240,217));
+        graphics.drawString(tagSentence, 170, 120);
+    }
+
+    private void writeVisitors(Long visitors) {
+        graphics.setColor(Color.WHITE);
+        graphics.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        graphics.drawString("Total Visitors :", 15, 160);
+
+        graphics.setColor(new Color(226,240,217));
+        graphics.drawString(String.valueOf(visitors), 170, 160);
     }
 }
