@@ -12,7 +12,8 @@ public enum PostStatViewResponseStatus {
     VIEW_BACKGROUND_NOT_FOUND(1006, "View 배경 이미지를 찾을 수 없습니다."),
     VIEW_MADE_IMAGE_LOAD_FAILURE(1007, "유저의 View 이미지를 불러올 수 없습니다."),
     GRAPHQL_JSON_PARSING_FAILURE(1008, "GraphQL 파일을 Json 변환에 실패하였습니다."),
-    NO_SUCH_USER(1009, "존재하지 않는 유저입니다.");
+    NO_SUCH_USER(1009, "refresh_token이 등록되지 않는 유저입니다."),
+    INVALID_REFRESH_TOKEN(1010, "유효하지 않은 refresh_token입니다.");
 
     private int code;
     private String message;

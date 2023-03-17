@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import site.jongky.poststatview.dto.velog.VelogGetPostIdsRequest;
@@ -15,6 +16,7 @@ import site.jongky.poststatview.dto.velog.VelogGetStatsRequest;
 import site.jongky.poststatview.dto.velog.VelogOperationRequest;
 import site.jongky.poststatview.dto.velog.VelogUserTagsRequest;
 import site.jongky.poststatview.exception.PostStatViewException;
+import site.jongky.poststatview.exception.PostStatViewResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,8 +42,13 @@ public class VelogStatService {
 
     // 유저의 게시글 태그를 태그가 많은 순으로 조회
     public List<String> getTags(String username) {
-        return askAllTagsByUsername(username)
-                .subList(0, VELOG_GRAPHQL_USER_TAGS_MAX_SIZE);
+        List<String> tags = askAllTagsByUsername(username);
+
+        if (tags.size() > VELOG_GRAPHQL_USER_TAGS_MAX_SIZE) {
+            return tags.subList(0, VELOG_GRAPHQL_USER_TAGS_MAX_SIZE);
+        }
+
+        return tags;
     }
 
     // 유저의 총 방문자를 조회
@@ -94,7 +101,6 @@ public class VelogStatService {
     }
 
     private JSONArray getTagsJsonArray(String userTagsJson) {
-        System.out.println(userTagsJson);
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(userTagsJson);
             JSONObject data = (JSONObject) jsonObject.get("data");
@@ -118,7 +124,11 @@ public class VelogStatService {
         HttpEntity<String> entity = new HttpEntity(request.toJson(), headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.postForObject(VELOG_GRAPHQL_URL, entity, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(VELOG_GRAPHQL_URL, entity, String.class);
+
+        System.out.println(response.getBody());
+        validate(response.getBody());
+        return response.getBody();
     }
 
     public String postWith(VelogOperationRequest request) {
@@ -129,6 +139,16 @@ public class VelogStatService {
         return batchRequests.stream()
                 .map(batchRequest -> postWith(batchRequest, refreshToken))
                 .collect(Collectors.toList());
+    }
+
+    public void validate(String responseBody) {
+        if (responseBody.substring(2, 8).equals("errors")) {
+            throw new PostStatViewException(NO_SUCH_USER);
+        }
+
+        if (responseBody.substring(3, 9).equals("errors")) {
+            throw new PostStatViewException(PostStatViewResponseStatus.INVALID_REFRESH_TOKEN);
+        }
     }
 
     private JSONArray getPostJsonArray(String postIdJson)  {
