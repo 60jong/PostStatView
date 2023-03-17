@@ -96,13 +96,13 @@ public class StatViewMaker {
         int usernameWidth = graphics.getFontMetrics().stringWidth(username);
 
         graphics.setColor(Color.WHITE);
-        graphics.drawString("'s velog Stats", 20 + usernameWidth, 40);
+        graphics.drawString("'s velog Stats", 25 + usernameWidth, 40);
     }
 
     private void writePosts(int posts) {
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font(viewFont, Font.BOLD, 15));
-        graphics.drawString("Total Posts :", 15, 80);
+        graphics.drawString("Total Posts :", 20, 80);
 
         graphics.setColor(new Color(226,240,217));
         graphics.drawString(String.valueOf(posts), 170, 80);
@@ -111,7 +111,7 @@ public class StatViewMaker {
     private void writeTags(List<String> tags) {
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font(viewFont, Font.BOLD, 15));
-        graphics.drawString("Tags (most 3) :", 15, 120);
+        graphics.drawString("Tags (most 3) :", 20, 120);
 
         String tagSentence = String.join(" / ", tags);
         graphics.setColor(new Color(226,240,217));
@@ -121,7 +121,7 @@ public class StatViewMaker {
     private void writeVisitors(Long visitors) {
         graphics.setColor(Color.WHITE);
         graphics.setFont(new Font(viewFont, Font.BOLD, 15));
-        graphics.drawString("Total Visitors :", 15, 160);
+        graphics.drawString("Total Visitors :", 20, 160);
 
         graphics.setColor(new Color(226,240,217));
         graphics.drawString(String.valueOf(visitors), 170, 160);
