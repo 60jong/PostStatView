@@ -19,6 +19,9 @@ public class StatViewMaker {
     private String POST_STAT_VIEW_BACKGROUND_IMAGE_FILE_PATH;
     @Value("${view.file-path.made-image}")
     private String POST_STAT_VIEW_MADE_IMAGE_FILE_PATH;
+    @Value("view.font")
+    private String viewFont;
+
     private final String POST_STAT_VIEW_SUBJECT_SUFFIX = "\'s velog Stats";
     private final String POST_STAT_VIEW_VISITORS_PREFIX = "Visitors : ";
     private final String POST_STAT_VIEW_POSTS_PREFIX = "Posts : ";
@@ -86,7 +89,7 @@ public class StatViewMaker {
     }
 
     private void writeUsername(String username) {
-        graphics.setFont(new Font("맑은고딕", Font.BOLD, 19));
+        graphics.setFont(new Font(viewFont, Font.BOLD, 19));
 
         graphics.setColor(new Color(226,240,217));
         graphics.drawString(username, 20, 40);
@@ -98,7 +101,7 @@ public class StatViewMaker {
 
     private void writePosts(int posts) {
         graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        graphics.setFont(new Font(viewFont, Font.BOLD, 15));
         graphics.drawString("Total Posts :", 15, 80);
 
         graphics.setColor(new Color(226,240,217));
@@ -107,7 +110,7 @@ public class StatViewMaker {
 
     private void writeTags(List<String> tags) {
         graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        graphics.setFont(new Font(viewFont, Font.BOLD, 15));
         graphics.drawString("Tags (most 3) :", 15, 120);
 
         String tagSentence = String.join(" / ", tags);
@@ -117,7 +120,7 @@ public class StatViewMaker {
 
     private void writeVisitors(Long visitors) {
         graphics.setColor(Color.WHITE);
-        graphics.setFont(new Font("맑은고딕", Font.BOLD, 15));
+        graphics.setFont(new Font(viewFont, Font.BOLD, 15));
         graphics.drawString("Total Visitors :", 15, 160);
 
         graphics.setColor(new Color(226,240,217));
