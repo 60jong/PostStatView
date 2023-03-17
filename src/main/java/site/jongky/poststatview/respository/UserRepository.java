@@ -24,4 +24,8 @@ public class UserRepository {
                 .getResultStream()
                 .findAny();
     }
+
+    public void updateRefreshToken(String username, String refreshToken) {
+
+    }
 }

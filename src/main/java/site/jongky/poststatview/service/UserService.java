@@ -15,9 +15,19 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long saveWithToken(String username, String refreshToken) {
+    public void saveWithToken(String username, String refreshToken) {
+        if (exists(username)) {
+            findByUsername(username).changeRefreshToken(refreshToken);
+            return;
+        }
+
         User user = new User(username, refreshToken);
-        return userRepository.save(user);
+        userRepository.save(user);
+    }
+
+    public boolean exists(String username) {
+        return !userRepository.findByUsername(username)
+                .isEmpty();
     }
 
     public User findByUsername(String username) {
