@@ -38,3 +38,4 @@ out/
 application.yml
 statviewimages/
 Velog-GraphQL-commands.md
+/src/test
