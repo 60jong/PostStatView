@@ -15,11 +15,9 @@ import site.jongky.poststatview.service.UserService;
 import site.jongky.poststatview.service.VelogStatService;
 import site.jongky.poststatview.util.StatViewMaker;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 import static site.jongky.poststatview.exception.PostStatViewResponseStatus.*;
 

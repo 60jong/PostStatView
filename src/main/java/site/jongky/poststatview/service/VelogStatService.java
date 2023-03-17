@@ -97,13 +97,9 @@ public class VelogStatService {
         System.out.println(userTagsJson);
         try {
             JSONObject jsonObject = (JSONObject) parser.parse(userTagsJson);
-            System.out.println(jsonObject.toString());
             JSONObject data = (JSONObject) jsonObject.get("data");
-            System.out.println(data.toString());
             JSONObject userTags = (JSONObject) data.get("userTags");
-            System.out.println(userTags.toString());
             JSONArray tagJsonArray = (JSONArray) userTags.get("tags");
-            System.out.println(tagJsonArray.toJSONString());
 
             return tagJsonArray;
         } catch (ParseException exception) {
