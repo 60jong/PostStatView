@@ -1,17 +1,17 @@
-package site.jongky.poststatview.util;
+package site._60jong.poststatview.util;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import site.jongky.poststatview.dto.StatViewParam;
-import site.jongky.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.dto.StatViewParam;
+import site._60jong.poststatview.exception.PostStatViewException;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
 
-import static site.jongky.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
 @Component
 public class StatViewMaker {

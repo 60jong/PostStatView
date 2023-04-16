@@ -1,4 +1,4 @@
-package site.jongky.poststatview.service;
+package site._60jong.poststatview.service;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,18 +11,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import site.jongky.poststatview.dto.velog.VelogGetPostIdsRequest;
-import site.jongky.poststatview.dto.velog.VelogGetStatsRequest;
-import site.jongky.poststatview.dto.velog.VelogOperationRequest;
-import site.jongky.poststatview.dto.velog.VelogUserTagsRequest;
-import site.jongky.poststatview.exception.PostStatViewException;
-import site.jongky.poststatview.exception.PostStatViewResponseStatus;
+import site._60jong.poststatview.dto.velog.VelogGetPostIdsRequest;
+import site._60jong.poststatview.dto.velog.VelogGetStatsRequest;
+import site._60jong.poststatview.dto.velog.VelogOperationRequest;
+import site._60jong.poststatview.dto.velog.VelogUserTagsRequest;
+import site._60jong.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.exception.PostStatViewResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static site.jongky.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
 @Service
 public class VelogStatService {

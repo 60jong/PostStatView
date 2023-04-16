@@ -1,4 +1,4 @@
-package site.jongky.poststatview.exception;
+package site._60jong.poststatview.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

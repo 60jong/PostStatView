@@ -1,13 +1,13 @@
-package site.jongky.poststatview.service;
+package site._60jong.poststatview.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import site.jongky.poststatview.domain.User;
-import site.jongky.poststatview.exception.PostStatViewException;
-import site.jongky.poststatview.respository.UserRepository;
+import site._60jong.poststatview.domain.User;
+import site._60jong.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.respository.UserRepository;
 
-import static site.jongky.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
 @RequiredArgsConstructor
 @Service

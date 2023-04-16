@@ -1,4 +1,4 @@
-package site.jongky.poststatview.domain;
+package site._60jong.poststatview.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

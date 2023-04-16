@@ -1,4 +1,4 @@
-package site.jongky.poststatview;
+package site._60jong.poststatview;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

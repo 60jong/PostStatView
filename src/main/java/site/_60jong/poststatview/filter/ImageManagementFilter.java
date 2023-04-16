@@ -1,4 +1,4 @@
-package site.jongky.poststatview.filter;
+package site._60jong.poststatview.filter;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;

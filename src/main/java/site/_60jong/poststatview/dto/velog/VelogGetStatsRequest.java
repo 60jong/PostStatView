@@ -1,15 +1,15 @@
-package site.jongky.poststatview.dto.velog;
+package site._60jong.poststatview.dto.velog;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import site.jongky.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.exception.PostStatViewException;
 
 import java.util.List;
 import java.util.Map;
 
-import static site.jongky.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
 public class VelogGetStatsRequest implements VelogOperationRequest {
     private List<String> postIds;

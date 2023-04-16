@@ -1,25 +1,23 @@
-package site.jongky.poststatview.controller;
+package site._60jong.poststatview.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import site.jongky.poststatview.dto.RefreshTokenRegisterRequest;
-import site.jongky.poststatview.dto.StatViewParam;
-import site.jongky.poststatview.exception.PostStatViewException;
-import site.jongky.poststatview.exception.PostStatViewResponseStatus;
-import site.jongky.poststatview.service.UserService;
-import site.jongky.poststatview.service.VelogStatService;
-import site.jongky.poststatview.util.StatViewMaker;
+import site._60jong.poststatview.dto.RefreshTokenRegisterRequest;
+import site._60jong.poststatview.dto.StatViewParam;
+import site._60jong.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.exception.PostStatViewResponseStatus;
+import site._60jong.poststatview.service.UserService;
+import site._60jong.poststatview.service.VelogStatService;
+import site._60jong.poststatview.util.StatViewMaker;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import static site.jongky.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -74,17 +72,5 @@ public class VelogStatController {
     ) {
         userService.saveWithToken(username, request.getRefreshToken());
         return ResponseEntity.ok(REFRESH_TOKEN_REGISTER_SUCCESS);
-    }
-
-    public boolean isStatViewExisting(String statsViewImageFileName) throws IOException {
-        try {
-            // 이미지 존재 여부 확인
-            new FileInputStream(statsViewImageFileName).close();
-            return true;
-        } catch (FileNotFoundException fileNotFoundException) {
-            return false;
-        } catch (IOException ioException) {
-            throw new IOException();
-        }
     }
 }

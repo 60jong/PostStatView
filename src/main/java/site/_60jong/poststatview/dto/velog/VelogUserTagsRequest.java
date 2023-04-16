@@ -1,14 +1,14 @@
-package site.jongky.poststatview.dto.velog;
+package site._60jong.poststatview.dto.velog;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import site.jongky.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.exception.PostStatViewException;
 
 import java.util.Map;
 
-import static site.jongky.poststatview.exception.PostStatViewResponseStatus.GRAPHQL_JSON_PARSING_FAILURE;
+import static site._60jong.poststatview.exception.PostStatViewResponseStatus.GRAPHQL_JSON_PARSING_FAILURE;
 
 @AllArgsConstructor
 public class VelogUserTagsRequest implements VelogOperationRequest{

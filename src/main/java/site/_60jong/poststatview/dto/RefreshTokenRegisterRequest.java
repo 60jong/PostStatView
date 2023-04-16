@@ -1,4 +1,4 @@
-package site.jongky.poststatview.dto;
+package site._60jong.poststatview.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
