@@ -41,12 +41,6 @@ jobs:
             |_|   \\___/|___/\\__|_____/ \\__\\__,_|\\__| \\/   |_|\\___| \\_/\\_/  "
         shell: bash
 
-      - name: Create Develop YML
-        run: |
-          cd ./src/main/resources
-          touch ./application-develop.yml
-          echo "${{ secrets.DEVELOP_YML }}" > ./application-develop.yml
-
       - name: Create TEST YML
         run: |
           cd ./src/test/resources
