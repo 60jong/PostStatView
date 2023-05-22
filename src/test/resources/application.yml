@@ -1,0 +1,36 @@
+server:
+  port:
+
+spring:
+  profiles:
+    active: test
+
+  datasource:
+    driver-class-name:
+    url:
+    username:
+
+  jpa:
+    show-sql:
+    hibernate:
+      ddl-auto:
+      properties:
+        format_sql:
+
+datasource:
+  velog:
+    graphql:
+      url:
+      batch:
+        size:
+          max:
+      user:
+        tag:
+          size:
+            max:
+
+view:
+  file-path:
+    background:
+    made-image:
+  font:

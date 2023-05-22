@@ -17,6 +17,6 @@ public class PostStatViewApplication {
 
 	@Bean
 	public File backgroundImgFile() {
-		return new File("statviewimages/post-stat-view-background.png");
+		return new File("src/main/resources/static/viewimage/view-background.png");
 	}
 }
