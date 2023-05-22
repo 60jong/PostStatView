@@ -36,5 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 application.yml
+
 statviewimages/
 Velog-GraphQL-commands.md
