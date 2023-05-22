@@ -1,6 +1,7 @@
 package site._60jong.poststatview.util;
 
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import site._60jong.poststatview.dto.StatViewParam;
@@ -21,6 +22,8 @@ public class StatViewMaker {
     private String POST_STAT_VIEW_MADE_IMAGE_FILE_PATH;
     @Value("view.font")
     private String viewFont;
+    @Autowired
+    private File backgroundImgFile;
 
     private final String POST_STAT_VIEW_SUBJECT_SUFFIX = "\'s velog Stats";
     private final String POST_STAT_VIEW_VISITORS_PREFIX = "Visitors : ";
@@ -51,9 +54,10 @@ public class StatViewMaker {
 
     public void writeStatsWithVisitors(String username, int posts, List<String> tags, Long visitors) {
         try {
-            BufferedImage image = ImageIO.read(new File(POST_STAT_VIEW_BACKGROUND_IMAGE_FILE_PATH));
 
-            graphics = image.getGraphics();
+            BufferedImage backgroundImage = ImageIO.read(backgroundImgFile);
+
+            graphics = backgroundImage.getGraphics();
             graphics.setColor(Color.WHITE);
 
             writeUsername(username);
@@ -62,7 +66,7 @@ public class StatViewMaker {
             writePosts(posts);
 
             // 수정된 사진 새로 저장
-            ImageIO.write(image, "png", new File(String.format(POST_STAT_VIEW_MADE_IMAGE_FILE_PATH, username)));
+            ImageIO.write(backgroundImage, "png", new File(String.format(POST_STAT_VIEW_MADE_IMAGE_FILE_PATH, username)));
             graphics.dispose();
         }catch (IOException exception) {
             throw new PostStatViewException(VIEW_MADE_IMAGE_LOAD_FAILURE);
@@ -71,9 +75,10 @@ public class StatViewMaker {
 
     public void writeStats(String username, int posts, List<String> tags) {
         try {
-            BufferedImage image = ImageIO.read(new File(POST_STAT_VIEW_BACKGROUND_IMAGE_FILE_PATH));
+            System.out.println(backgroundImgFile);
+            BufferedImage backgroundImage = ImageIO.read(backgroundImgFile);
 
-            graphics = image.getGraphics();
+            graphics = backgroundImage.getGraphics();
             graphics.setColor(Color.WHITE);
 
             writeUsername(username);
@@ -81,7 +86,7 @@ public class StatViewMaker {
             writePosts(posts);
 
             // 수정된 사진 새로 저장
-            ImageIO.write(image, "png", new File(String.format(POST_STAT_VIEW_MADE_IMAGE_FILE_PATH, username)));
+            ImageIO.write(backgroundImage, "png", new File(String.format(POST_STAT_VIEW_MADE_IMAGE_FILE_PATH, username)));
             graphics.dispose();
         } catch (IOException exception) {
             throw new PostStatViewException(VIEW_MADE_IMAGE_LOAD_FAILURE);
