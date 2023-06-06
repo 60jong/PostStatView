@@ -36,14 +36,14 @@ jobs:
       - name: Create Default yml
         run: |
           cd ./src/main/resources
-          echo ${{secrets.DEVELOP_YML}} > ./application.yml
+          echo "${{secrets.DEVELOP_YML}}" > ./application.yml
         shell: bash
 
       - name: Create Develop yml
         run: |
           cd ./src/main/resources
           touch application-develop.yml
-          echo ${{secrets.DEVELOP_YML}} > ./application-develop.yml
+          echo "${{secrets.DEVELOP_YML}}" > ./application-develop.yml
         shell: bash
 
       # keystore.p12 파일 복사
