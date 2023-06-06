@@ -45,6 +45,12 @@ jobs:
           touch application-develop.yml
           echo "${{secrets.DEVELOP_YML}}" > ./application-develop.yml
         shell: bash
+      # keystore.p12 파일 복사
+      - name: Copy keystore.p12
+        env:
+          KEYSTORE_FILE: ${{ secrets.KEYSTORE }}
+        run: |
+          echo $KEYSTORE_FILE | base64 --decode > keystore.p12
 
       - name: Make zip file
         run: |
