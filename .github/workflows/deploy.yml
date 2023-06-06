@@ -33,6 +33,12 @@ jobs:
         run: ./gradlew clean bootJar -x test
         shell: bash
 
+      - name: Create Default yml
+        run: |
+          cd ./src/main/resources
+          echo "${{secrets.DEVELOP_YML}}" > ./application.yml
+        shell: bash
+
       - name: Create Develop yml
         run: |
           cd ./src/main/resources
