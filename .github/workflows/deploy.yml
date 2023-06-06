@@ -49,7 +49,7 @@ jobs:
       # keystore.p12 파일 복사
       - name: Copy keystore.p12
         env:
-          KEYSTORE_FILE: ${{ secrets.KEYSTORE }}
+          KEYSTORE_FILE: ${{ secrets.KEY_STORE }}
         run: |
           cd ./src/main/resources
           touch keystore.p12
