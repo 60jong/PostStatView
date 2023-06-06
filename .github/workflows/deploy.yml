@@ -53,7 +53,7 @@ jobs:
         run: |
           cd ./src/main/resources
           touch keystore.p12
-          echo $KEYSTORE_FILE | base64 --decode > keystore.p12
+          echo $KEYSTORE_FILE | base64 -di > keystore.p12
 
       - name: Make zip file
         run: |
