@@ -36,14 +36,14 @@ jobs:
       - name: Create Default yml
         run: |
           cd ./src/main/resources
-          echo "${{secrets.DEVELOP_YML}}" > ./application.yml
+          echo ${{secrets.DEVELOP_YML}} > ./application.yml
         shell: bash
 
       - name: Create Develop yml
         run: |
           cd ./src/main/resources
           touch application-develop.yml
-          echo "${{secrets.DEVELOP_YML}}" > ./application-develop.yml
+          echo ${{secrets.DEVELOP_YML}} > ./application-develop.yml
         shell: bash
 
       # keystore.p12 파일 복사
@@ -51,6 +51,8 @@ jobs:
         env:
           KEYSTORE_FILE: ${{ secrets.KEYSTORE }}
         run: |
+          cd ./src/main/resources
+          touch keystore.p12
           echo $KEYSTORE_FILE | base64 --decode > keystore.p12
 
       - name: Make zip file
