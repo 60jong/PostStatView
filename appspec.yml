@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source:  /
-    destination: /home/ubuntu/post-stat-view/artifact/zip
+    destination: /home/ubuntu/post-stat-view/PostStatView
     overwrite: yes
 
 permissions:
