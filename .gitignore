@@ -38,5 +38,5 @@ out/
 application-develop.yml
 application-test.yml
 
-statviewimages/
+statviewimages/**
 Velog-GraphQL-commands.md
