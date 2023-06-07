@@ -29,10 +29,6 @@ jobs:
         run: chmod +x ./gradlew
         shell: bash
 
-      - name: Build with Gradle
-        run: ./gradlew clean bootJar -x test
-        shell: bash
-
       - name: Create Default yml
         run: |
           cd ./src/main/resources
@@ -44,6 +40,10 @@ jobs:
           cd ./src/main/resources
           touch application-develop.yml
           echo "${{secrets.DEVELOP_YML}}" > ./application-develop.yml
+        shell: bash
+
+      - name: Build with Gradle
+        run: ./gradlew clean bootJar -x test
         shell: bash
 
       # keystore.p12 파일 복사
