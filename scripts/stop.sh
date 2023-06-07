@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ubuntu/post-stat-view/PostStatView"
-JAR_FILE="$PROJECT_ROOT/spring-webapp.jar"
+PROJECT_ROOT="/home/ubuntu/post-stat-view/artifact"
+JAR_FILE="$PROJECT_ROOT/build/libs/*.jar"
 
 DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
 
