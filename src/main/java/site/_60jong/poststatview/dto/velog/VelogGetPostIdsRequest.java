@@ -13,7 +13,7 @@ public class VelogGetPostIdsRequest implements VelogOperationRequest {
                 "    \"variables\" : {\n" +
                 "        \"username\" : \"%s\"\n" +
                 "    },\n" +
-                "    \"query\" : \"query Posts($username: String) {\\n  posts(username: $username, limit: 0) {\\n    id\\n  }\\n}\"" +
+                "    \"query\" : \"query Posts($username: String) {\\n  posts(username: $username, limit: 50) {\\n    id\\n  }\\n}\"" +
                 "}"
                 , username);
     }

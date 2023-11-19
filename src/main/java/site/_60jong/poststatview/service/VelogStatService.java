@@ -1,5 +1,6 @@
 package site._60jong.poststatview.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 
 import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
+@Slf4j
 @Service
 public class VelogStatService {
     @Value("${datasource.velog.graphql.url}")
@@ -82,7 +84,7 @@ public class VelogStatService {
             String postId = (String) post.get("id");
             postIds.add(postId);
         }
-
+        log.info("Total Posts : {}", postIds.size());
         return postIds;
     }
 
