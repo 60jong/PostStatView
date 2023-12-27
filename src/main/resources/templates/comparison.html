@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Velog-Stat-Comparison</title>
+    <style>
+        div {
+            display: inline-block;
+            text-align: center;
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Batching query</h1>
+        <ul>
+            <h3>visitors : [[${visitorsByBatching}]]</h3>
+            <h3>elapsed : [[${elapsedByBatching}]] ms</h3>
+        </ul>
+
+        <textarea rows="33" cols="40">
+query GetStats($post_id: ID!)
+{
+    getStats(post_id: $post_id)
+    {
+        total
+    }
+}
+        </textarea>
+    </div>
+
+    <div>
+        <h1>Mono query</h1>
+        <ul>
+            <h3>visitors : [[${visitorsByMono}]]</h3>
+            <h3>elapsed : [[${elapsedByMono}]] ms</h3>
+        </ul>
+
+        <textarea rows="33" cols="40">
+[
+    {
+        query GetStats($post_id: ID!)
+        {
+            getStats(post_id: $post_id)
+            {
+                total
+            }
+        }
+    },
+    {
+        query GetStats($post_id: ID!)
+        {
+            getStats(post_id: $post_id)
+            {
+                total
+            }
+        }
+    },
+    `
+    `
+    `
+    {
+        query GetStats($post_id: ID!)
+        {
+            getStats(post_id: $post_id)
+            {
+                total
+            }
+        }
+    }
+]
+        </textarea>
+    </div>
+</body>
+</html>

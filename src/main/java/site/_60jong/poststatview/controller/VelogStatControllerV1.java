@@ -11,7 +11,7 @@ import site._60jong.poststatview.dto.StatViewParam;
 import site._60jong.poststatview.exception.PostStatViewException;
 import site._60jong.poststatview.exception.PostStatViewResponseStatus;
 import site._60jong.poststatview.service.UserService;
-import site._60jong.poststatview.service.VelogStatService;
+import site._60jong.poststatview.service.VelogStatServiceV1;
 import site._60jong.poststatview.util.StatViewMaker;
 
 import java.io.FileInputStream;
@@ -22,12 +22,12 @@ import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/velog-stats")
-public class VelogStatController {
+public class VelogStatControllerV1 {
     @Value("${view.file-path.made-image}")
     private String POST_STAT_VIEW_MADE_IMAGE_FILE_PATH;
 
     private final UserService userService;
-    private final VelogStatService velogStatService;
+    private final VelogStatServiceV1 velogStatService;
     private final StatViewMaker statViewMaker;
 
     // Velog Post Stats Image 반환
