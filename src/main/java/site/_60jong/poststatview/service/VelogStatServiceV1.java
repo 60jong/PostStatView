@@ -27,7 +27,7 @@ import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
 
 @Slf4j
 @Service
-public class VelogStatService {
+public class VelogStatServiceV1 {
     @Value("${datasource.velog.graphql.url}")
     private String VELOG_GRAPHQL_URL;
     @Value("${datasource.velog.graphql.batch.size.max}")

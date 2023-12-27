@@ -1,8 +1,11 @@
-package site._60jong.poststatview.service;
+package site._60jong.poststatview.service.velog.request;
+
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class VelogStatRequestBody {
 
     private String operationName;
@@ -14,7 +17,12 @@ public class VelogStatRequestBody {
     }
 
     public static VelogStatRequestBodyBuilder builder() {
+
         return new VelogStatRequestBodyBuilder(new VelogStatRequestBody());
+    }
+
+    public boolean isBatched() {
+        return false;
     }
 
     //== Builder ==//
