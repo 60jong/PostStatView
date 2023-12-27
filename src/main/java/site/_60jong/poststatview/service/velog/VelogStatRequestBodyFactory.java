@@ -1,58 +1,45 @@
 package site._60jong.poststatview.service.velog;
 
 import site._60jong.poststatview.service.velog.posts.PostId;
-import site._60jong.poststatview.service.velog.request.VelogStatBatchRequestBody;
 import site._60jong.poststatview.service.velog.request.VelogStatBatchRequestBodyBuilder;
-import site._60jong.poststatview.service.velog.request.VelogStatRequest;
 import site._60jong.poststatview.service.velog.request.VelogStatRequestBody;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class VelogStatRequestFactory {
+public class VelogStatRequestBodyFactory {
 
-    public static VelogStatRequest createInitialPostsRequest(String username) {
+    public static VelogStatRequestBody createInitialPostsRequestBody(String username) {
 
-        return createPostsRequest(username, "");
+        return createPostsRequestBody(username, "");
     }
 
-    public static VelogStatRequest createPostsRequest(String username, String cursor) {
-
-        return VelogStatRequest.of(VelogStatRequestBody.builder()
-                .operationName("Posts")
-                .variable("username", username)
-                .variable("cursor", cursor)
-                .query(VelogStatQuery.POSTS_QUERY)
-                .build());
-    }
-
-    public static VelogStatRequest createGetStatsRequest(PostId postId) {
-
-        return VelogStatRequest.of(createGetStatsRequestBody(postId));
-    }
-
-    public static List<VelogStatRequest> createGetStatsBatchRequests(List<PostId> postIds) {
-
-        List<VelogStatRequestBody> bodies = postIds.stream()
-                                                   .map(VelogStatRequestFactory::createGetStatsRequestBody)
-                                                   .collect(Collectors.toList());
-
-//        List<VelogStatRequestBody> batchBodies = VelogStatBatchRequestBody.from(bodies);
-        List<List<VelogStatRequestBody>> batchBodies = VelogStatBatchRequestBodyBuilder.createBatchBodies(bodies);
-//
-//        return batchBodies.stream()
-//                          .map(VelogStatRequest::of)
-//                          .collect(Collectors.toList());
-        return null;
-    }
-
-    private static VelogStatRequestBody createGetStatsRequestBody(PostId postId) {
+    public static VelogStatRequestBody createPostsRequestBody(String username, String cursor) {
 
         return VelogStatRequestBody.builder()
-                .operationName("GetStats")
-                .variable("post_id", postId.getId())
-                .query(VelogStatQuery.GET_STATS_QUERY)
-                .build();
+                                   .operationName("Posts")
+                                   .variable("username", username)
+                                   .variable("cursor", cursor)
+                                   .query(VelogStatQuery.POSTS_QUERY)
+                                   .build();
+    }
+
+    public static VelogStatRequestBody createGetStatsRequestBody(PostId postId) {
+
+        return VelogStatRequestBody.builder()
+                                   .operationName("GetStats")
+                                   .variable("post_id", postId.getId())
+                                   .query(VelogStatQuery.GET_STATS_QUERY)
+                                   .build();
+    }
+
+    public static List<List<VelogStatRequestBody>> createGetStatsBatchRequestBodies(List<PostId> postIds) {
+
+        List<VelogStatRequestBody> bodies = postIds.stream()
+                                                   .map(VelogStatRequestBodyFactory::createGetStatsRequestBody)
+                                                   .collect(Collectors.toList());
+
+        return VelogStatBatchRequestBodyBuilder.createBatchBodies(bodies);
     }
 
     private static class VelogStatQuery {
