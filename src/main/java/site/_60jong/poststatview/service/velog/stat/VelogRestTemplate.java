@@ -1,4 +1,4 @@
-package site._60jong.poststatview.service.velog;
+package site._60jong.poststatview.service.velog.stat;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;

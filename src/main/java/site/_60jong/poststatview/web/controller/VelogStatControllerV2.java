@@ -9,7 +9,7 @@ import site._60jong.poststatview.service.velog.stat.VelogStatServiceV2;
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/velog-stat")
 @Controller
-public class VelogStatControllerV0 {
+public class VelogStatControllerV2 {
 
     private final VelogStatServiceV2 velogStatService;
 

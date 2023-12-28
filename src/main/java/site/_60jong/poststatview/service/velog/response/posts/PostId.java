@@ -1,4 +1,4 @@
-package site._60jong.poststatview.service.velog.posts;
+package site._60jong.poststatview.service.velog.response.posts;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

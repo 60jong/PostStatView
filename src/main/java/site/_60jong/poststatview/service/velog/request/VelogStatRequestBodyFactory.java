@@ -1,8 +1,6 @@
-package site._60jong.poststatview.service.velog;
+package site._60jong.poststatview.service.velog.request;
 
-import site._60jong.poststatview.service.velog.posts.PostId;
-import site._60jong.poststatview.service.velog.request.VelogStatBatchRequestBodyBuilder;
-import site._60jong.poststatview.service.velog.request.VelogStatRequestBody;
+import site._60jong.poststatview.service.velog.response.posts.PostId;
 
 import java.util.List;
 import java.util.stream.Collectors;

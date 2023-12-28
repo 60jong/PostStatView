@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import site._60jong.poststatview.service.velog.VelogRestTemplate;
+import site._60jong.poststatview.service.velog.stat.VelogRestTemplate;
 
 @Configuration
 public class VelogConfig {
