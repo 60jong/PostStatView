@@ -1,4 +1,4 @@
-package site._60jong.poststatview.controller;
+package site._60jong.poststatview.legacy.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
@@ -6,18 +6,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import site._60jong.poststatview.dto.RefreshTokenRegisterRequest;
-import site._60jong.poststatview.dto.StatViewParam;
-import site._60jong.poststatview.exception.PostStatViewException;
-import site._60jong.poststatview.exception.PostStatViewResponseStatus;
-import site._60jong.poststatview.service.UserService;
-import site._60jong.poststatview.service.VelogStatServiceV1;
-import site._60jong.poststatview.util.StatViewMaker;
+import site._60jong.poststatview.legacy.dto.RefreshTokenRegisterRequest;
+import site._60jong.poststatview.legacy.dto.StatViewParam;
+import site._60jong.poststatview.legacy.exception.PostStatViewException;
+import site._60jong.poststatview.legacy.exception.PostStatViewResponseStatus;
+import site._60jong.poststatview.legacy.service.UserService;
+import site._60jong.poststatview.legacy.service.VelogStatServiceV1;
+import site._60jong.poststatview.legacy.util.StatViewMaker;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.legacy.exception.PostStatViewResponseStatus.*;
 
 @RequiredArgsConstructor
 @RestController

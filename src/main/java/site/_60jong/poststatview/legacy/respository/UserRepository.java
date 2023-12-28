@@ -1,7 +1,7 @@
-package site._60jong.poststatview.respository;
+package site._60jong.poststatview.legacy.respository;
 
 import org.springframework.stereotype.Repository;
-import site._60jong.poststatview.domain.User;
+import site._60jong.poststatview.legacy.domain.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

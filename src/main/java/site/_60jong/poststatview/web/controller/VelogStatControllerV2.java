@@ -1,29 +1,20 @@
-package site._60jong.poststatview.controller;
+package site._60jong.poststatview.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import site._60jong.poststatview.service.VelogStatServiceV1;
-import site._60jong.poststatview.service.VelogStatServiceV2;
+import site._60jong.poststatview.service.velog.stat.VelogStatServiceV2;
 
 @RequiredArgsConstructor
-@RequestMapping("/api/v2/velog-stats")
+@RequestMapping("/api/v2/velog-stat")
 @Controller
-public class VelogStatControllerV2 {
+public class VelogStatControllerV0 {
 
     private final VelogStatServiceV2 velogStatService;
 
     @GetMapping("/visitors/comparison")
     public String getVisitors(final @RequestParam String username, Model model) {
-
-        // Batching
-        long startBatching = System.currentTimeMillis();
-        int visitorsByBatching = velogStatService.batchFindTotalVisitorsByUsername(username);
-        long endBatching = System.currentTimeMillis();
-
-        model.addAttribute("visitorsByBatching", visitorsByBatching);
-        model.addAttribute("elapsedByBatching", endBatching - startBatching);
 
         // Mono
         long startMono = System.currentTimeMillis();
@@ -32,6 +23,14 @@ public class VelogStatControllerV2 {
 
         model.addAttribute("visitorsByMono", visitorsByMono);
         model.addAttribute("elapsedByMono", endMono - startMono);
+
+        // Batching
+        long startBatching = System.currentTimeMillis();
+        int visitorsByBatching = velogStatService.batchFindTotalVisitorsByUsername(username);
+        long endBatching = System.currentTimeMillis();
+
+        model.addAttribute("visitorsByBatching", visitorsByBatching);
+        model.addAttribute("elapsedByBatching", endBatching - startBatching);
 
         return "comparison";
     }

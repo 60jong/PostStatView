@@ -1,4 +1,4 @@
-package site._60jong.poststatview.exception;
+package site._60jong.poststatview.legacy.exception;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

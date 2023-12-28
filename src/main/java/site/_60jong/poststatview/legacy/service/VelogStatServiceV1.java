@@ -1,4 +1,4 @@
-package site._60jong.poststatview.service;
+package site._60jong.poststatview.legacy.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -12,18 +12,18 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import site._60jong.poststatview.dto.velog.VelogGetPostIdsRequest;
-import site._60jong.poststatview.dto.velog.VelogGetStatsRequest;
-import site._60jong.poststatview.dto.velog.VelogOperationRequest;
-import site._60jong.poststatview.dto.velog.VelogUserTagsRequest;
-import site._60jong.poststatview.exception.PostStatViewException;
-import site._60jong.poststatview.exception.PostStatViewResponseStatus;
+import site._60jong.poststatview.legacy.dto.velog.VelogGetPostIdsRequest;
+import site._60jong.poststatview.legacy.dto.velog.VelogGetStatsRequest;
+import site._60jong.poststatview.legacy.dto.velog.VelogOperationRequest;
+import site._60jong.poststatview.legacy.dto.velog.VelogUserTagsRequest;
+import site._60jong.poststatview.legacy.exception.PostStatViewException;
+import site._60jong.poststatview.legacy.exception.PostStatViewResponseStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.legacy.exception.PostStatViewResponseStatus.*;
 
 @Slf4j
 @Service

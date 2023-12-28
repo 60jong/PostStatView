@@ -1,4 +1,4 @@
-package site._60jong.poststatview.dto.velog;
+package site._60jong.poststatview.legacy.dto.velog;
 
 import lombok.AllArgsConstructor;
 

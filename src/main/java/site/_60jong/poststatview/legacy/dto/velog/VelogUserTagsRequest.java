@@ -1,14 +1,13 @@
-package site._60jong.poststatview.dto.velog;
+package site._60jong.poststatview.legacy.dto.velog;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.AllArgsConstructor;
-import site._60jong.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.legacy.exception.PostStatViewException;
+import site._60jong.poststatview.legacy.exception.PostStatViewResponseStatus;
 
 import java.util.Map;
-
-import static site._60jong.poststatview.exception.PostStatViewResponseStatus.GRAPHQL_JSON_PARSING_FAILURE;
 
 @AllArgsConstructor
 public class VelogUserTagsRequest implements VelogOperationRequest{
@@ -30,7 +29,7 @@ public class VelogUserTagsRequest implements VelogOperationRequest{
         try {
             return objectMapper.writeValueAsString(node);
         } catch (JsonProcessingException exception) {
-            throw new PostStatViewException(GRAPHQL_JSON_PARSING_FAILURE);
+            throw new PostStatViewException(PostStatViewResponseStatus.GRAPHQL_JSON_PARSING_FAILURE);
         }
     }
 }

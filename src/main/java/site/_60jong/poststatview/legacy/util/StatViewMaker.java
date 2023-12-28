@@ -1,18 +1,18 @@
-package site._60jong.poststatview.util;
+package site._60jong.poststatview.legacy.util;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import site._60jong.poststatview.dto.StatViewParam;
-import site._60jong.poststatview.exception.PostStatViewException;
+import site._60jong.poststatview.legacy.dto.StatViewParam;
+import site._60jong.poststatview.legacy.exception.PostStatViewException;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.List;
 
-import static site._60jong.poststatview.exception.PostStatViewResponseStatus.*;
+import static site._60jong.poststatview.legacy.exception.PostStatViewResponseStatus.*;
 
 @Component
 public class StatViewMaker {

@@ -101,7 +101,7 @@ public class VelogStatServiceV2 {
         return findTotalVisitorsByPostIds(postIds);
     }
 
-    private int findTotalVisitorsByPostIds(List<PostId> postIds) {
+    public int findTotalVisitorsByPostIds(List<PostId> postIds) {
 
         List<GetStatsResponse> responses = new ArrayList<>();
 
