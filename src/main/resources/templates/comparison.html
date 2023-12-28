@@ -4,23 +4,30 @@
     <meta charset="UTF-8">
     <title>Velog-Stat-Comparison</title>
     <style>
+        * {
+            background: #0d1117;
+            color: #fafafa;
+        }
         div {
             display: inline-block;
             text-align: center;
             width: 45%;
         }
+        b {
+            color: #5d9fff;
+        }
     </style>
 </head>
 <body>
 
-    <div>
-        <h1>Batching query</h1>
-        <ul>
-            <h3>visitors : [[${visitorsByBatching}]]</h3>
-            <h3>elapsed : [[${elapsedByBatching}]] ms</h3>
-        </ul>
 
-        <textarea rows="33" cols="40">
+<div>
+    <h1>Mono query</h1>
+    <ul>
+        <h3>visitors : [[${visitorsByMono}]]</h3>
+        <h3>elapsed : <b>[[${elapsedByMono}]] ms</b></h3>
+    </ul>
+    <textarea rows="33" cols="40">
 query GetStats($post_id: ID!)
 {
     getStats(post_id: $post_id)
@@ -29,13 +36,14 @@ query GetStats($post_id: ID!)
     }
 }
         </textarea>
-    </div>
+
+</div>
 
     <div>
-        <h1>Mono query</h1>
+        <h1>Batching query</h1>
         <ul>
-            <h3>visitors : [[${visitorsByMono}]]</h3>
-            <h3>elapsed : [[${elapsedByMono}]] ms</h3>
+            <h3>visitors : [[${visitorsByBatching}]]</h3>
+            <h3>elapsed : <b>[[${elapsedByBatching}]] ms</b></h3>
         </ul>
 
         <textarea rows="33" cols="40">
@@ -73,5 +81,6 @@ query GetStats($post_id: ID!)
 ]
         </textarea>
     </div>
+
 </body>
 </html>
