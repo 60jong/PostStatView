@@ -25,9 +25,9 @@ public class VelogStatViewService {
 
     private String renderView(final String username, final VelogStatViewParam param) {
 
-        Font usernameFont = new Font("default", Font.PLAIN, 16);
-        Font statFont = new Font("default", Font.PLAIN, 15);
-        Font tagFont = new Font("default", Font.PLAIN, 14);
+        Font usernameFont = new Font("default", Font.PLAIN, 14);
+        Font statFont = new Font("default", Font.PLAIN, 14);
+        Font tagFont = new Font("default", Font.PLAIN, 12);
 
         double usernameWidth = StatViewUtil.getTextLength(username, usernameFont);
         double postsWidth = StatViewUtil.getTextLength(String.valueOf(param.getPosts()), statFont);
@@ -38,11 +38,11 @@ public class VelogStatViewService {
         double visitorsLocationX = postsLocationX + postsWidth + 30;
         double viewWidth = visitorsLocationX + visitorsWidth + 10;
 
-        return  "<svg width=\"" + viewWidth + "\" height=\"60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\" >\n" +
+        return  "<svg width=\"" + viewWidth + "\" height=\"60\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
                 "    <style>\n" +
-                "        .name{ fill: black; font-weight: 500; font-size: 16px;}\n" +
-                "        .stat{ font-size: 15px }\n" +
-                "        .tag{ fill: #20C997; font-weight: 500; font-size: 14px; color: #20C997;}\n" +
+                "        .name{ fill: black; font-weight: 500; font-size: 14px;}\n" +
+                "        .stat{ font-size: 14px }\n" +
+                "        .tag{ fill: #20C997; font-weight: 500; font-size: 12px; color: #20C997;}\n" +
                 "    </style>\n" +
                 "    <g>\n" +
                 "        <rect x=\"0\" rx=\"5\" width=\"" + viewWidth + "\" height=\"54\" fill=\"#ffffff\"/>\n" +
