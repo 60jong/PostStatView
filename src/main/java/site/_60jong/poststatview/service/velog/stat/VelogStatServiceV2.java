@@ -1,16 +1,15 @@
-package site._60jong.poststatview.service;
+package site._60jong.poststatview.service.velog.stat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import site._60jong.poststatview.service.velog.VelogRestTemplate;
 import site._60jong.poststatview.service.velog.response.VelogStat;
-import site._60jong.poststatview.service.velog.VelogStatRequestBodyFactory;
-import site._60jong.poststatview.service.velog.getstats.GetStatsResponse;
-import site._60jong.poststatview.service.velog.getstats.GetStatsResponses;
-import site._60jong.poststatview.service.velog.posts.PostId;
-import site._60jong.poststatview.service.velog.posts.PostsResponse;
+import site._60jong.poststatview.service.velog.request.VelogStatRequestBodyFactory;
+import site._60jong.poststatview.service.velog.response.getstats.GetStatsResponse;
+import site._60jong.poststatview.service.velog.response.getstats.GetStatsResponses;
+import site._60jong.poststatview.service.velog.response.posts.PostId;
+import site._60jong.poststatview.service.velog.response.posts.PostsResponse;
 import site._60jong.poststatview.service.velog.request.VelogStatRequestBody;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class VelogStatServiceV2 {
         return batchFindTotalVisitorsByPostIds(postIds);
     }
 
-    private int batchFindTotalVisitorsByPostIds(List<PostId> postIds) {
+    public int batchFindTotalVisitorsByPostIds(List<PostId> postIds) {
 
         List<List<VelogStatRequestBody>> batchBodies = VelogStatRequestBodyFactory.createGetStatsBatchRequestBodies(postIds);
         GetStatsResponses statsResponses = getStatsResponses(batchBodies);
@@ -101,7 +100,7 @@ public class VelogStatServiceV2 {
         return findTotalVisitorsByPostIds(postIds);
     }
 
-    public int findTotalVisitorsByPostIds(List<PostId> postIds) {
+    private int findTotalVisitorsByPostIds(List<PostId> postIds) {
 
         List<GetStatsResponse> responses = new ArrayList<>();
 
