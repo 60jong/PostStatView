@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymelead.org">
+<head>
+    <meta charset="UTF-8">
+    <title>post-stat-view</title>
+</head>
+<body>
+
+<div>
+    <h1>post-stat-view</h1>
+</div>
+<div>
+    <h2>[ Velog ] stat-view</h2>
+</div>
+<div>
+
+    <div>
+        <div>
+            <label>username</label>
+        </div>
+        <div>
+            <input name="username" type="text"/>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            <label>refresh_token</label>
+        </div>
+        <div>
+            <input name="refreshToken" type="text"/>
+        </div>
+    </div>
+
+    <div>
+        <button onclick="submitForm()">register</button>
+    </div>
+
+    <div>
+        <label id="requestUrl"></label>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    function submitForm() {
+        let username = document.querySelector('input[name="username"]').value;
+        let refreshToken = document.querySelector('input[name="refreshToken"]').value;
+
+        let data = {
+            "username": username,
+            "refreshToken": refreshToken
+        };
+
+-        fetch('/api/v2/velog-stat/auth/token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                const requestUrlLabel = document.getElementById('requestUrl');
+                requestUrlLabel.innerHTML = 'now you can request to : ';
+
+                const requestUrl = "http://post-stat-view.do-main.site/api/v2/velog-stat/view?username=" + data.username + "&show_visitors=true";
+
+                const link = document.createElement('a');
+                link.href = requestUrl;
+                link.textContent = requestUrl;
+
+                requestUrlLabel.appendChild(link);
+            }
+        });
+
+        // location.href = "http://localhost:8080";
+
+    }
+</script>
+</html>

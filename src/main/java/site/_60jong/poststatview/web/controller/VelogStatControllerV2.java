@@ -38,4 +38,9 @@ public class VelogStatControllerV2 {
 
         return "comparison";
     }
+
+    @GetMapping("/auth/token/register")
+    public String getTokenRegisterForm() {
+        return "tokenRegisterForm";
+    }
 }
