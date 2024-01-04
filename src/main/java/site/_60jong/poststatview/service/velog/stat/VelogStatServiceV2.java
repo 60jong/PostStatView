@@ -72,18 +72,17 @@ public class VelogStatServiceV2 {
         return statsResponses.getTotalVisitors();
     }
     private GetStatsResponses getStatsResponses(AuthInfo authInfo, List<List<VelogStatRequestBody>> batchBodies) {
-
         List<GetStatsResponse> responses = new ArrayList<>();
 
         for (List<VelogStatRequestBody> batchBody : batchBodies) {
             List<VelogStat<GetStatsResponse>> responseBodies = velogRestTemplate.postBatchRequest(authInfo, batchBody);
-            responses.addAll(getAndConvertAllData(responseBodies));
+            responses.addAll(getDatas(responseBodies));
         }
 
         return new GetStatsResponses(responses);
     }
 
-    private List<GetStatsResponse> getAndConvertAllData(List<VelogStat<GetStatsResponse>> responseBodies) {
+    private List<GetStatsResponse> getDatas(List<VelogStat<GetStatsResponse>> responseBodies) {
 
         return responseBodies.stream()
                 .map(statResponse -> om.convertValue(statResponse.getData(), GetStatsResponse.class))

@@ -20,13 +20,20 @@ public class VelogStatViewService {
     private final VelogStatServiceV2 statService;
     private final AuthService authService;
 
-    public String getStatView(final String username) {
+    public String getStatView(final String username, final Boolean showVisitors) {
         final AuthInfo authInfo = getAuthInfo(username);
 
         List<PostId> postIds = statService.findAllPostIdByAuthInfo(authInfo);
-        int visitors = statService.batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postIds);
+        int visitors = findVisitorsIfShowVisitorsAndHasToken(authInfo, postIds, showVisitors);
 
         return renderView(username, new VelogStatViewParam(postIds.size(), visitors, List.of("java", "web", "servlet")));
+    }
+
+    private int findVisitorsIfShowVisitorsAndHasToken(AuthInfo authInfo, List<PostId> postIds, Boolean showVisitors) {
+        if (showVisitors && authInfo.hasRefreshToken()) {
+            return statService.batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postIds);
+        }
+        return 0;
     }
 
     private AuthInfo getAuthInfo(String username) {

@@ -20,7 +20,7 @@ public class VelogStatApiControllerV2 {
             final @RequestParam String username,
             final @RequestParam(name = "show_visitors", defaultValue = "false") Boolean showVisitors
     ) {
-        return ResponseEntity.ok(statViewService.getStatView(username));
+        return ResponseEntity.ok(statViewService.getStatView(username, showVisitors));
     }
 
     @PostMapping("/auth/token")
