@@ -4,8 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import site._60jong.poststatview.domain.AuthInfo;
 import site._60jong.poststatview.service.velog.response.VelogStat;
-import site._60jong.poststatview.service.velog.request.VelogStatRequestBodyFactory;
 import site._60jong.poststatview.service.velog.response.getstats.GetStatsResponse;
 import site._60jong.poststatview.service.velog.response.getstats.GetStatsResponses;
 import site._60jong.poststatview.service.velog.response.posts.PostId;
@@ -15,6 +15,8 @@ import site._60jong.poststatview.service.velog.request.VelogStatRequestBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static site._60jong.poststatview.service.velog.request.VelogStatRequestBodyFactory.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,27 +31,27 @@ public class VelogStatServiceV2 {
     /**
      * 유저의 모든 게시글 id를 조회
      */
-    public List<PostId> findAllPostId(final String username) {
+    public List<PostId> findAllPostIdByAuthInfo(final AuthInfo authInfo) {
 
         List<PostId> postIds = new ArrayList<>();
 
-        VelogStatRequestBody body = VelogStatRequestBodyFactory.createInitialPostsRequestBody(username);
-        PostsResponse postsResponse = getPostsResponse(body);
+        VelogStatRequestBody body = createInitialPostsRequestBody(authInfo);
+        PostsResponse postsResponse = getPostsResponse(authInfo, body);
 
         while (!postsResponse.isEmpty()) {
             postIds.addAll(postsResponse.getPosts());
             PostId lastPostId = postsResponse.getLastPostId();
 
-            body = VelogStatRequestBodyFactory.createPostsRequestBody(username, lastPostId.getId());
-            postsResponse = getPostsResponse(body);
+            body = createPostsRequestBody(authInfo, lastPostId.getId());
+            postsResponse = getPostsResponse(authInfo, body);
         }
 
         return postIds;
     }
 
-    private PostsResponse getPostsResponse(VelogStatRequestBody body) {
+    private PostsResponse getPostsResponse(AuthInfo authInfo, VelogStatRequestBody body) {
 
-        VelogStat<PostsResponse> response = velogRestTemplate.postRequest(body);
+        VelogStat<PostsResponse> response = velogRestTemplate.postRequest(authInfo, body);
 
         return om.convertValue(response.getData(), PostsResponse.class);
     }
@@ -57,26 +59,24 @@ public class VelogStatServiceV2 {
     /**
      * 유저의 모든 게시글 방문자 총합을 조회 - batch 조회
      */
-    public int batchFindTotalVisitorsByUsername(final String username) {
+    public int batchFindTotalVisitorsByUsername(final AuthInfo authInfo) {
+        final List<PostId> postIds = findAllPostIdByAuthInfo(authInfo);
 
-        final List<PostId> postIds = findAllPostId(username);
-
-        return batchFindTotalVisitorsByPostIds(postIds);
+        return batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postIds);
     }
 
-    public int batchFindTotalVisitorsByPostIds(List<PostId> postIds) {
-
-        List<List<VelogStatRequestBody>> batchBodies = VelogStatRequestBodyFactory.createGetStatsBatchRequestBodies(postIds);
-        GetStatsResponses statsResponses = getStatsResponses(batchBodies);
+    public int batchFindTotalVisitorsByAuthInfoAndPostIds(AuthInfo authInfo, List<PostId> postIds) {
+        List<List<VelogStatRequestBody>> batchBodies = createGetStatsBatchRequestBodies(postIds);
+        GetStatsResponses statsResponses = getStatsResponses(authInfo, batchBodies);
 
         return statsResponses.getTotalVisitors();
     }
-    private GetStatsResponses getStatsResponses(List<List<VelogStatRequestBody>> batchBodies) {
+    private GetStatsResponses getStatsResponses(AuthInfo authInfo, List<List<VelogStatRequestBody>> batchBodies) {
 
         List<GetStatsResponse> responses = new ArrayList<>();
 
         for (List<VelogStatRequestBody> batchBody : batchBodies) {
-            List<VelogStat<GetStatsResponse>> responseBodies = velogRestTemplate.postBatchRequest(batchBody);
+            List<VelogStat<GetStatsResponse>> responseBodies = velogRestTemplate.postBatchRequest(authInfo, batchBody);
             responses.addAll(getAndConvertAllData(responseBodies));
         }
 
@@ -93,21 +93,20 @@ public class VelogStatServiceV2 {
     /**
      * 유저의 모든 게시글 방문자 총합을 조회 - 한 query 씩 조회
      */
-    public int findTotalVisitorsByUsername(final String username) {
+    public int findTotalVisitorsByUsername(final AuthInfo authInfo) {
+        final List<PostId> postIds = findAllPostIdByAuthInfo(authInfo);
 
-        final List<PostId> postIds = findAllPostId(username);
-
-        return findTotalVisitorsByPostIds(postIds);
+        return findTotalVisitorsByPostIds(authInfo, postIds);
     }
 
-    private int findTotalVisitorsByPostIds(List<PostId> postIds) {
+    private int findTotalVisitorsByPostIds(AuthInfo authInfo, List<PostId> postIds) {
 
         List<GetStatsResponse> responses = new ArrayList<>();
 
         for (PostId postId : postIds) {
-            VelogStatRequestBody body = VelogStatRequestBodyFactory.createGetStatsRequestBody(postId);
+            VelogStatRequestBody body = createGetStatsRequestBody(postId);
 
-            VelogStat<GetStatsResponse> responseBody = velogRestTemplate.postRequest(body);
+            VelogStat<GetStatsResponse> responseBody = velogRestTemplate.postRequest(authInfo, body);
             responses.add(om.convertValue(responseBody.getData(), GetStatsResponse.class));
         }
 

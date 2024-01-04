@@ -1,5 +1,6 @@
 package site._60jong.poststatview.service.velog.request;
 
+import site._60jong.poststatview.domain.AuthInfo;
 import site._60jong.poststatview.service.velog.response.posts.PostId;
 
 import java.util.List;
@@ -7,16 +8,16 @@ import java.util.stream.Collectors;
 
 public class VelogStatRequestBodyFactory {
 
-    public static VelogStatRequestBody createInitialPostsRequestBody(String username) {
+    public static VelogStatRequestBody createInitialPostsRequestBody(AuthInfo authInfo) {
 
-        return createPostsRequestBody(username, "");
+        return createPostsRequestBody(authInfo, "");
     }
 
-    public static VelogStatRequestBody createPostsRequestBody(String username, String cursor) {
+    public static VelogStatRequestBody createPostsRequestBody(AuthInfo authInfo, String cursor) {
 
         return VelogStatRequestBody.builder()
                                    .operationName("Posts")
-                                   .variable("username", username)
+                                   .variable("username", authInfo.getUsername())
                                    .variable("cursor", cursor)
                                    .query(VelogStatQuery.POSTS_QUERY)
                                    .build();

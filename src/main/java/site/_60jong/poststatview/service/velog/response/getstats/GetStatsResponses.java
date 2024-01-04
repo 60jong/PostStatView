@@ -12,7 +12,6 @@ public class GetStatsResponses {
     private List<GetStatsResponse> responses;
 
     public int getTotalVisitors() {
-
         return responses.stream()
                         .mapToInt(res -> res.getGetStats().getTotal())
                         .sum();
