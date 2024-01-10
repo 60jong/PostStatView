@@ -1,10 +1,13 @@
 package site._60jong.poststatview.web.api;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.CacheControl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site._60jong.poststatview.service.auth.AuthService;
 import site._60jong.poststatview.service.velog.view.VelogStatViewService;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/velog-stat")
@@ -20,7 +23,9 @@ public class VelogStatApiControllerV2 {
             final @RequestParam String username,
             final @RequestParam(name = "show_visitors", defaultValue = "false") Boolean showVisitors
     ) {
-        return ResponseEntity.ok(statViewService.getStatView(username, showVisitors));
+        return ResponseEntity.ok()
+                             .cacheControl(CacheControl.noCache())
+                             .body(statViewService.getStatView(username, showVisitors));
     }
 
     @PostMapping("/auth/token")
