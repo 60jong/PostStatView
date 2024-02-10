@@ -33,4 +33,8 @@ public class AuthInfo {
     public void registerToken(String token) {
         this.refreshToken = token;
     }
+
+    public void changeToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 }

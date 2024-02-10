@@ -3,6 +3,8 @@ package site._60jong.poststatview.service.velog.stat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import site._60jong.poststatview.domain.AuthInfo;
 import site._60jong.poststatview.service.velog.response.VelogStat;
@@ -32,7 +34,6 @@ public class VelogStatServiceV2 {
      * 유저의 모든 게시글 id를 조회
      */
     public List<PostId> findAllPostIdByAuthInfo(final AuthInfo authInfo) {
-
         List<PostId> postIds = new ArrayList<>();
 
         VelogStatRequestBody body = createInitialPostsRequestBody(authInfo);
@@ -50,10 +51,30 @@ public class VelogStatServiceV2 {
     }
 
     private PostsResponse getPostsResponse(AuthInfo authInfo, VelogStatRequestBody body) {
+        ResponseEntity<VelogStat<PostsResponse>> response = velogRestTemplate.postRequest(authInfo, body);
+        VelogStat<PostsResponse> responseBody = response.getBody();
 
-        VelogStat<PostsResponse> response = velogRestTemplate.postRequest(authInfo, body);
+        authInfo.changeToken(getRefreshToken(response.getHeaders()));
 
-        return om.convertValue(response.getData(), PostsResponse.class);
+        return om.convertValue(responseBody.getData(), PostsResponse.class);
+    }
+
+    private String getRefreshToken(HttpHeaders headers) {
+        List<String> setCookies = headers.get(HttpHeaders.SET_COOKIE);
+
+        for (var cookie : setCookies) {
+            String tokenExpression = cookie.split(";")[0];
+            String[] tokenTypeAndValue = tokenExpression.split("=");
+
+            final String tokenType = tokenTypeAndValue[0];
+            final String tokenValue = tokenTypeAndValue[1];
+
+            if (tokenType.equals("refresh_token")) {
+                return tokenValue;
+            }
+        }
+
+        throw new RuntimeException();
     }
 
     /**
@@ -75,7 +96,9 @@ public class VelogStatServiceV2 {
         List<GetStatsResponse> responses = new ArrayList<>();
 
         for (List<VelogStatRequestBody> batchBody : batchBodies) {
-            List<VelogStat<GetStatsResponse>> responseBodies = velogRestTemplate.postBatchRequest(authInfo, batchBody);
+            ResponseEntity<List<VelogStat<GetStatsResponse>>> response = velogRestTemplate.postBatchRequest(authInfo, batchBody);
+            List<VelogStat<GetStatsResponse>> responseBodies = response.getBody();
+
             responses.addAll(getDatas(responseBodies));
         }
 
@@ -105,7 +128,9 @@ public class VelogStatServiceV2 {
         for (PostId postId : postIds) {
             VelogStatRequestBody body = createGetStatsRequestBody(postId);
 
-            VelogStat<GetStatsResponse> responseBody = velogRestTemplate.postRequest(authInfo, body);
+            ResponseEntity<VelogStat<GetStatsResponse>> response = velogRestTemplate.postRequest(authInfo, body);
+            VelogStat<GetStatsResponse> responseBody = response.getBody();
+
             responses.add(om.convertValue(responseBody.getData(), GetStatsResponse.class));
         }
 

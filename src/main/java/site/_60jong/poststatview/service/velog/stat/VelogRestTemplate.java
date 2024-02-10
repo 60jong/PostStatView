@@ -18,33 +18,28 @@ public class VelogRestTemplate {
     private final RestTemplate restTemplate;
 
     public VelogRestTemplate(String url, RestTemplate restTemplate) {
-
         this.VELOG_GRAPHQL_URL = url;
         this.restTemplate = restTemplate;
     }
 
-    public <T> VelogStat<T> postRequest(AuthInfo authInfo, VelogStatRequestBody body) {
-
+    public <T> ResponseEntity<VelogStat<T>> postRequest(AuthInfo authInfo, VelogStatRequestBody body) {
         HttpHeaders headers = createHeadersByAuthInfo(authInfo);
         HttpEntity<VelogStatRequestBody> requestEntity = new HttpEntity<>(body, headers);
 
-        ResponseEntity<VelogStat<T>> response = restTemplate.exchange(VELOG_GRAPHQL_URL,
-                                                                      POST,
-                                                                      requestEntity,
-                                                                      new ParameterizedTypeReference<>() {});
-        return response.getBody();
+        return restTemplate.exchange(VELOG_GRAPHQL_URL,
+                                     POST,
+                                     requestEntity,
+                                     new ParameterizedTypeReference<>() {});
     }
 
-    public <T> List<VelogStat<T>> postBatchRequest(AuthInfo authInfo, List<VelogStatRequestBody> bodies) {
-
+    public <T> ResponseEntity<List<VelogStat<T>>> postBatchRequest(AuthInfo authInfo, List<VelogStatRequestBody> bodies) {
         HttpHeaders headers = createHeadersByAuthInfo(authInfo);
         HttpEntity<List<VelogStatRequestBody>> requestEntity = new HttpEntity<>(bodies, headers);
 
-        ResponseEntity<List<VelogStat<T>>> responses = restTemplate.exchange(VELOG_GRAPHQL_URL,
-                                                                      POST,
-                                                                      requestEntity,
-                                                                      new ParameterizedTypeReference<>() {});
-        return responses.getBody();
+        return restTemplate.exchange(VELOG_GRAPHQL_URL,
+                                     POST,
+                                     requestEntity,
+                                     new ParameterizedTypeReference<>() {});
     }
 
     private HttpHeaders createHeadersByAuthInfo(AuthInfo authInfo) {

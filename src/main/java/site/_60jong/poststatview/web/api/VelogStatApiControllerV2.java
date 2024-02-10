@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import site._60jong.poststatview.service.auth.AuthService;
 import site._60jong.poststatview.service.velog.view.VelogStatViewService;
 
-import javax.servlet.http.HttpServletResponse;
-
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/velog-stat")
 @RestController
