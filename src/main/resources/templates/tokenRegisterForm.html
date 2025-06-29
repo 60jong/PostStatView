@@ -1,47 +1,111 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymelead.org">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>post-stat-view</title>
+    <title>PostStatView</title>
+    <style>
+        body {
+            background-color: #f0fff9;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        h1 {
+            color: #3db39e;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #3db39e;
+            text-align: center;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #3db39e;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #a2e4d8;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: #3db39e;
+        }
+        button {
+            background-color: #3db39e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2a9d8f;
+        }
+        #requestUrl {
+            margin-top: 20px;
+            color: #3db39e;
+            font-weight: bold;
+            word-break: break-all;
+        }
+        a {
+            color: #3db39e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-
-<div>
-    <h1>post-stat-view</h1>
-</div>
-<div>
-    <h2>[ Velog ] stat-view</h2>
-</div>
-<div>
-
+<div class="container">
     <div>
-        <div>
+        <a href="/"><h1>PostStatView</h1> </a>
+    </div>
+    <div>
+        <h2>Velog</h2>
+    </div>
+    <div>
+        <div class="form-group">
             <label>username</label>
-        </div>
-        <div>
             <input name="username" type="text"/>
         </div>
-    </div>
-
-    <div>
-        <div>
+        <div class="form-group">
             <label>refresh_token</label>
-        </div>
-        <div>
             <input name="refreshToken" type="text"/>
         </div>
-    </div>
-
-    <div>
-        <button onclick="submitForm()">register</button>
-    </div>
-
-    <div>
-        <label id="requestUrl"></label>
+        <div>
+            <button onclick="submitForm()">register</button>
+        </div>
+        <div>
+            <label id="requestUrl"></label>
+        </div>
     </div>
 </div>
 
-</body>
 <script type="text/javascript">
     function submitForm() {
         let username = document.querySelector('input[name="username"]').value;
@@ -52,7 +116,7 @@
             "refreshToken": refreshToken
         };
 
--        fetch('/api/v2/velog-stat/auth/token', {
+        fetch('/api/v2/velog-stat/auth/token', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -61,7 +125,7 @@
         }).then(response => {
             if (response.ok) {
                 const requestUrlLabel = document.getElementById('requestUrl');
-                requestUrlLabel.innerHTML = 'now you can request to : ';
+                requestUrlLabel.innerHTML = 'now you can access : <br>';
 
                 const requestUrl = "http://post-stat-view.do-main.site/api/v2/velog-stat/view?username=" + data.username + "&show_visitors=true";
 
@@ -72,9 +136,7 @@
                 requestUrlLabel.appendChild(link);
             }
         });
-
-        // location.href = "http://localhost:8080";
-
     }
 </script>
+</body>
 </html>

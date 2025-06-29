@@ -5,29 +5,99 @@
     <title>Velog-Stat-Comparison</title>
     <style>
         * {
-            background: #0d1117;
-            color: #fafafa;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        div {
-            display: inline-block;
+        body {
+            background: #f0fff9;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .home-link {
+            display: block;
             text-align: center;
-            width: 45%;
+            margin-bottom: 40px;
+        }
+        .home-link h1 {
+            color: #3db39e;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        .columns {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .column {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 30px;
+            width: 48%;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .column h2 {
+            color: #3db39e;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .column h3 {
+            color: #333;
+            margin-bottom: 10px;
         }
         b {
             color: #5d9fff;
         }
+        ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: 100%;
+            background: #ffffff;
+            color: #333;
+            border: 2px solid #3db39e;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            padding: 12px;
+            resize: none;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #2a9d8f;
+            font-size: 0.9em;
+        }
+        .footer a {
+            color: #2a9d8f;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-
-
-<div>
-    <h1>Mono query</h1>
-    <ul>
-        <h3>visitors : [[${visitorsByMono}]]</h3>
-        <h3>elapsed : <b>[[${elapsedByMono}]] ms</b></h3>
-    </ul>
-    <textarea rows="33" cols="40">
+<div class="container">
+    <a href="/" class="home-link">
+        <h1>PostStatView</h1>
+    </a>
+    <div class="columns">
+        <div class="column">
+            <h2>Mono query</h2>
+            <ul>
+                <h3>visitors : [[${visitorsByMono}]]</h3>
+                <h3>elapsed : <b>[[${elapsedByMono}]] ms</b></h3>
+            </ul>
+            <textarea rows="33" cols="40">
 query GetStats($post_id: ID!)
 {
     getStats(post_id: $post_id)
@@ -35,52 +105,30 @@ query GetStats($post_id: ID!)
         total
     }
 }
-        </textarea>
+                </textarea>
+        </div>
 
-</div>
-
-    <div>
-        <h1>Batching query</h1>
-        <ul>
-            <h3>visitors : [[${visitorsByBatching}]]</h3>
-            <h3>elapsed : <b>[[${elapsedByBatching}]] ms</b></h3>
-        </ul>
-
-        <textarea rows="33" cols="40">
+        <div class="column">
+            <h2>Batching query</h2>
+            <ul>
+                <h3>visitors : [[${visitorsByBatching}]]</h3>
+                <h3>elapsed : <b>[[${elapsedByBatching}]] ms</b></h3>
+            </ul>
+            <textarea rows="33" cols="40">
 [
     {
-        query GetStats($post_id: ID!)
-        {
-            getStats(post_id: $post_id)
-            {
-                total
-            }
-        }
+        "query": "query GetStats($post_id: ID!) { getStats(post_id: $post_id) { total } }",
+        "variables": { "post_id": "YOUR_POST_ID" }
     },
     {
-        query GetStats($post_id: ID!)
-        {
-            getStats(post_id: $post_id)
-            {
-                total
-            }
-        }
-    },
-    `
-    `
-    `
-    {
-        query GetStats($post_id: ID!)
-        {
-            getStats(post_id: $post_id)
-            {
-                total
-            }
-        }
+        "query": "query GetStats($post_id: ID!) { getStats(post_id: $post_id) { total } }",
+        "variables": { "post_id": "YOUR_POST_ID" }
     }
+    /* 여러 개 추가 가능 */
 ]
-        </textarea>
+                </textarea>
+        </div>
     </div>
-
+</div>
 </body>
 </html>

@@ -1,31 +1,35 @@
 server:
-  port:
+  port: 8080
 
 spring:
   datasource:
-    driver-class-name:
-    url:
-    username:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
 
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto:
+      ddl-auto: update
       properties:
-        format_sql:
+        format_sql: true
+  h2:
+    console:
+      enabled: on
 
 
 datasource:
   velog:
     graphql:
-      url:
+      url: https://v2cdn.velog.io/graphql
       batch:
         size:
-          max:
+          max: 32
       user:
         tag:
           size:
-            max:
+            max: 3
 
 view:
   file-path:

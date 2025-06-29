@@ -2,13 +2,150 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>post-stat-view</title>
+    <title>PostStatView</title>
+    <style>
+        body {
+            background-color: #f0fff9;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        h1 {
+            color: #3db39e;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #2a9d8f;
+            font-size: 1em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #3db39e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            background-color: #2a9d8f;
+        }
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 80%;
+        }
+        .modal input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            border: 2px solid #a2e4d8;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 15px 0;
+        }
+        .modal button {
+            background-color: #3db39e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .modal button:hover {
+            background-color: #2a9d8f;
+        }
+        .modal-footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+        .modal-footer a {
+            color: #3db39e;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .modal-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div style="text-align: center">
-        <h1>post-stat-view</h1>
-        made by ugaeng
+<div class="container">
+    <h1>PostStatView</h1>
+    <div class="subtitle">made by 60jong</div>
+    <div>
+        <div>
+            <a href="/api/v2/velog-stat/auth/token/register" class="btn">Register Token</a>
+        </div>
+        <div>
+            <button onclick="showModal()" class="btn">Compare Mono/Batch Query</button>
+        </div>
     </div>
+</div>
 
+<!-- 모달 -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h3>Enter username</h3>
+        <input type="text" id="username" placeholder="Username">
+        <div>
+            <button onclick="goToComparison()">Go</button>
+            <button onclick="closeModal()">Cancel</button>
+        </div>
+        <div class="modal-footer">
+            Not registered token yet? <a href="/api/v2/velog-stat/auth/token/register">Register now</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showModal() {
+        document.getElementById('modal').style.display = 'flex';
+    }
+    function closeModal() {
+        document.getElementById('modal').style.display = 'none';
+    }
+    function goToComparison() {
+        const username = document.getElementById('username').value;
+        if (username) {
+            window.location.href = `/api/v2/velog-stat/visitors/comparison?username=${encodeURIComponent(username)}`;
+        } else {
+            alert('Please enter a username.');
+        }
+    }
+</script>
 </body>
 </html>
