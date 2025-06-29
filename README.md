@@ -18,9 +18,10 @@
 
 ### 사용 예시
 
-![](https://velog.velcdn.com/images/rudwhd515/post/2ed0e413-1389-4282-91ac-83bdd92a129a/image.png)
+<img width="812" alt="스크린샷 2025-06-29 23 04 41" src="https://github.com/user-attachments/assets/134dba1e-2cd8-4fca-ab3c-5d9e2421a671" />
 
-(민트 색 이미지)
+
+(빨간 박스 내 이미지)
 
 ## 필요 정보
 
