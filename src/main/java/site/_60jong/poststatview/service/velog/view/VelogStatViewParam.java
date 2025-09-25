@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class VelogStatViewParam {
 
+    private String username;
     private int posts;
     private int visitors;
     private List<String> tagNames;

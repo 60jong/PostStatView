@@ -136,4 +136,8 @@ public class VelogStatServiceV2 {
 
         return new GetStatsResponses(responses).getTotalVisitors();
     }
+
+    public List<String> findTopTagNames(int tags) {
+        return List.of("java", "spring", "os");
+    }
 }
