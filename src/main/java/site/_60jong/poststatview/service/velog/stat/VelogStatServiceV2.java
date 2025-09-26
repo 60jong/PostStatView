@@ -10,7 +10,7 @@ import site._60jong.poststatview.domain.AuthInfo;
 import site._60jong.poststatview.service.velog.response.VelogStat;
 import site._60jong.poststatview.service.velog.response.getstats.GetStatsResponse;
 import site._60jong.poststatview.service.velog.response.getstats.GetStatsResponses;
-import site._60jong.poststatview.service.velog.response.posts.PostId;
+import site._60jong.poststatview.service.velog.response.posts.PostInfo;
 import site._60jong.poststatview.service.velog.response.posts.PostsResponse;
 import site._60jong.poststatview.service.velog.request.VelogStatRequestBody;
 
@@ -33,61 +33,61 @@ public class VelogStatServiceV2 {
     /**
      * 유저의 모든 게시글 id를 조회
      */
-    public List<PostId> findAllPostIdByAuthInfo(final AuthInfo authInfo) {
-        List<PostId> postIds = new ArrayList<>();
+    public List<PostInfo> findAllPostInfoByAuthInfo(final AuthInfo authInfo) {
+        List<PostInfo> postInfos = new ArrayList<>();
 
         VelogStatRequestBody body = createInitialPostsRequestBody(authInfo);
         PostsResponse postsResponse = getPostsResponse(authInfo, body);
 
         while (!postsResponse.isEmpty()) {
-            postIds.addAll(postsResponse.getPosts());
-            PostId lastPostId = postsResponse.getLastPostId();
+            postInfos.addAll(postsResponse.getPosts());
+            PostInfo lastPostInfo = postsResponse.getLastPostInfo();
 
-            body = createPostsRequestBody(authInfo, lastPostId.getId());
+            body = createPostsRequestBody(authInfo, lastPostInfo.getId());
             postsResponse = getPostsResponse(authInfo, body);
         }
 
-        return postIds;
+        return postInfos;
     }
 
     private PostsResponse getPostsResponse(AuthInfo authInfo, VelogStatRequestBody body) {
         ResponseEntity<VelogStat<PostsResponse>> response = velogRestTemplate.postRequest(authInfo, body);
         VelogStat<PostsResponse> responseBody = response.getBody();
 
-        authInfo.changeToken(getRefreshToken(response.getHeaders()));
+        changeTokenIfRefreshTokenResponded(authInfo, response.getHeaders());
 
         return om.convertValue(responseBody.getData(), PostsResponse.class);
     }
 
-    private String getRefreshToken(HttpHeaders headers) {
+    private void changeTokenIfRefreshTokenResponded(AuthInfo authInfo, HttpHeaders headers) {
         List<String> setCookies = headers.get(HttpHeaders.SET_COOKIE);
 
-        for (var cookie : setCookies) {
-            String tokenExpression = cookie.split(";")[0];
-            String[] tokenTypeAndValue = tokenExpression.split("=");
+        if (setCookies != null && !setCookies.isEmpty()) {
+            for (var cookie : setCookies) {
+                String tokenExpression = cookie.split(";")[0];
+                String[] tokenTypeAndValue = tokenExpression.split("=");
 
-            final String tokenType = tokenTypeAndValue[0];
-            final String tokenValue = tokenTypeAndValue[1];
+                final String tokenType = tokenTypeAndValue[0];
+                final String tokenValue = tokenTypeAndValue[1];
 
-            if (tokenType.equals("refresh_token")) {
-                return tokenValue;
+                if (tokenType.equals("refresh_token")) {
+                    authInfo.changeToken(tokenValue);
+                }
             }
         }
-
-        throw new RuntimeException();
     }
 
     /**
      * 유저의 모든 게시글 방문자 총합을 조회 - batch 조회
      */
     public int batchFindTotalVisitorsByUsername(final AuthInfo authInfo) {
-        final List<PostId> postIds = findAllPostIdByAuthInfo(authInfo);
+        final List<PostInfo> postInfos = findAllPostInfoByAuthInfo(authInfo);
 
-        return batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postIds);
+        return batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postInfos);
     }
 
-    public int batchFindTotalVisitorsByAuthInfoAndPostIds(AuthInfo authInfo, List<PostId> postIds) {
-        List<List<VelogStatRequestBody>> batchBodies = createGetStatsBatchRequestBodies(postIds);
+    public int batchFindTotalVisitorsByAuthInfoAndPostIds(AuthInfo authInfo, List<PostInfo> postInfos) {
+        List<List<VelogStatRequestBody>> batchBodies = createGetStatsBatchRequestBodies(postInfos);
         GetStatsResponses statsResponses = getStatsResponses(authInfo, batchBodies);
 
         return statsResponses.getTotalVisitors();
@@ -116,17 +116,17 @@ public class VelogStatServiceV2 {
      * 유저의 모든 게시글 방문자 총합을 조회 - 한 query 씩 조회
      */
     public int findTotalVisitorsByUsername(final AuthInfo authInfo) {
-        final List<PostId> postIds = findAllPostIdByAuthInfo(authInfo);
+        final List<PostInfo> postInfos = findAllPostInfoByAuthInfo(authInfo);
 
-        return findTotalVisitorsByPostIds(authInfo, postIds);
+        return findTotalVisitorsByPostIds(authInfo, postInfos);
     }
 
-    private int findTotalVisitorsByPostIds(AuthInfo authInfo, List<PostId> postIds) {
+    private int findTotalVisitorsByPostIds(AuthInfo authInfo, List<PostInfo> postInfos) {
 
         List<GetStatsResponse> responses = new ArrayList<>();
 
-        for (PostId postId : postIds) {
-            VelogStatRequestBody body = createGetStatsRequestBody(postId);
+        for (PostInfo postInfo : postInfos) {
+            VelogStatRequestBody body = createGetStatsRequestBody(postInfo);
 
             ResponseEntity<VelogStat<GetStatsResponse>> response = velogRestTemplate.postRequest(authInfo, body);
             VelogStat<GetStatsResponse> responseBody = response.getBody();
@@ -135,9 +135,5 @@ public class VelogStatServiceV2 {
         }
 
         return new GetStatsResponses(responses).getTotalVisitors();
-    }
-
-    public List<String> findTopTagNames(int tags) {
-        return List.of("java", "spring", "os");
     }
 }

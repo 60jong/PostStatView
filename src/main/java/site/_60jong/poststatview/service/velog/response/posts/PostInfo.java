@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostId {
+public class PostInfo {
 
     private String id;
+    private List<String> tags;
 }

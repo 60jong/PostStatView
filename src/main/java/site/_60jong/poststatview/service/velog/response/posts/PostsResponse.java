@@ -7,9 +7,9 @@ import java.util.List;
 @Getter
 public class PostsResponse {
 
-    private List<PostId> posts;
+    private List<PostInfo> posts;
 
-    public PostId getLastPostId() {
+    public PostInfo getLastPostInfo() {
 
         return posts.get(posts.size() - 1);
     }

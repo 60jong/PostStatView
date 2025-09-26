@@ -77,7 +77,6 @@ public class SvgStatViewRenderer {
         return tagNames.stream()
                 .map(tag -> {
                     double tagTextWidth = StatViewUtil.getTextLength(tag, FONT_TAG);
-                    System.out.println(tagTextWidth);
                     double tagBoxWidth = tagTextWidth + (TAG_PADDING_HORIZONTAL * 2);
 
                     String tagSvg = """

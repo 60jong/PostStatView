@@ -1,14 +1,19 @@
 package site._60jong.poststatview.service.velog.view;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site._60jong.poststatview.domain.AuthInfo;
 import site._60jong.poststatview.service.auth.AuthService;
 import site._60jong.poststatview.service.velog.stat.VelogStatServiceV2;
-import site._60jong.poststatview.service.velog.response.posts.PostId;
+import site._60jong.poststatview.service.velog.response.posts.PostInfo;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -19,16 +24,19 @@ public class VelogStatViewService {
     private final AuthService authService;
     private final SvgStatViewRenderer viewRenderer;
 
+    @Value("${datasource.velog.graphql.user.tag.size.max}")
+    private int maxTags;
+
     public String getStatView(final String username, final Boolean showVisitors) {
         final AuthInfo authInfo = getAuthInfo(username);
+        List<PostInfo> postInfos = statService.findAllPostInfoByAuthInfo(authInfo);
+        List<String> tagNames = extractTopTagNames(postInfos, maxTags);
 
-        List<PostId> postIds = statService.findAllPostIdByAuthInfo(authInfo);
-        int visitors = findVisitorsIfShowVisitorsAndHasToken(authInfo, postIds, showVisitors);
-        List<String> tagNames = statService.findTopTagNames(3);
+        int visitors = findVisitorsIfShowVisitorsAndHasToken(authInfo, postInfos, showVisitors);
 
         VelogStatViewParam param = new VelogStatViewParam(
                 username,
-                postIds.size(),
+                postInfos.size(),
                 visitors,
                 tagNames
         );
@@ -36,9 +44,9 @@ public class VelogStatViewService {
         return viewRenderer.render(param);
     }
 
-    private int findVisitorsIfShowVisitorsAndHasToken(AuthInfo authInfo, List<PostId> postIds, Boolean showVisitors) {
+    private int findVisitorsIfShowVisitorsAndHasToken(AuthInfo authInfo, List<PostInfo> postInfos, Boolean showVisitors) {
         if (showVisitors && authInfo.hasRefreshToken()) {
-            return statService.batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postIds);
+            return statService.batchFindTotalVisitorsByAuthInfoAndPostIds(authInfo, postInfos);
         }
         return 0;
     }
@@ -52,5 +60,19 @@ public class VelogStatViewService {
 
     private AuthInfo createAuthInfoByUsername(String username) {
         return authService.createAuthInfo(username, null);
+    }
+
+    private List<String> extractTopTagNames(List<PostInfo> postInfos, int n) {
+        return postInfos.stream()
+                .flatMap(info -> info.getTags().stream())
+                .collect(Collectors.groupingBy(
+                        Function.identity(), // 태그 이름을 key로 사용
+                        Collectors.counting()  // 각 그룹의 개수를 count
+                ))
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .limit(n)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 }
