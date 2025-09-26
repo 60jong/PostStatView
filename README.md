@@ -18,9 +18,8 @@
 
 ### 사용 예시
 
-![](https://velog.velcdn.com/images/rudwhd515/post/2ed0e413-1389-4282-91ac-83bdd92a129a/image.png)
+<img width="1694" height="931" alt="스크린샷 2025-09-26 22 22 38" src="https://github.com/user-attachments/assets/c8f10cc1-1be6-4196-b84c-c01059ad05b4" />
 
-(민트 색 이미지)
 
 ## 필요 정보
 
@@ -38,25 +37,25 @@
 
 - 게시글 수, 게시글 태그만 표시하고 싶은 경우
 
-GET `https://post-stat-view.60jong.site/api/v1/velog-stats?username={username}`
+GET `https://post-stat-view.60jong.site/api/v2/velog-stats?username={username}`
 
 - 추가로 총 방문자 수를 표시하고 싶은 경우
 
-POST `https://post-stat-view.60jong.site/api/v1/velog-stats/users/{username}/token`
+POST `https://post-stat-view.60jong.site/api/v2/velog-stats/users/{username}/token`
 
 with Request body : {"refreshToken":"yourTokenValue"}
 
-GET `https://post-stat-view.60jong.site/api/v1/velog-stats?username={username}&show_visitors=true`
+GET `https://post-stat-view.60jong.site/api/v2/velog-stats?username={username}&show_visitors=true`
 
 ## 사용 기술
 
-- Java 11
+- Java 17
 
 - Spring Boot 2.7.8
 
 - Spring-Data-JPA
 
-- AWS Ec2 Ubuntu 20.04.5 LTS
+- AWS Ec2 Ubuntu 24.04.5 LTS
 
 - MySQL 8.0.32
 
