@@ -37,15 +37,15 @@
 
 - 게시글 수, 게시글 태그만 표시하고 싶은 경우
 
-GET `https://post-stat-view.60jong.site/api/v2/velog-stats?username={username}`
+GET `https://poststatview.60jong.dev/api/v2/velog-stats?username={username}`
 
 - 추가로 총 방문자 수를 표시하고 싶은 경우
 
-POST `https://post-stat-view.60jong.site/api/v2/velog-stats/users/{username}/token`
+POST `https://poststatview.60jong.dev/api/v2/velog-stats/users/{username}/token`
 
 with Request body : {"refreshToken":"yourTokenValue"}
 
-GET `https://post-stat-view.60jong.site/api/v2/velog-stats?username={username}&show_visitors=true`
+GET `https://poststatview.60jong.dev/api/v2/velog-stats?username={username}&show_visitors=true`
 
 ## 사용 기술
 
