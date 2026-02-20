@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import site._60jong.poststatview.service.auth.AuthService;
 import site._60jong.poststatview.service.velog.view.VelogStatViewService;
 
+import java.time.Duration;
+
 @RequiredArgsConstructor
 @RequestMapping("/api/v2/velog-stat")
 @RestController
@@ -22,8 +24,8 @@ public class VelogStatApiControllerV2 {
             final @RequestParam(name = "show_visitors", defaultValue = "false") Boolean showVisitors
     ) {
         return ResponseEntity.ok()
-                             .cacheControl(CacheControl.noCache())
-                             .body(statViewService.getStatView(username, showVisitors));
+                .cacheControl(CacheControl.maxAge(Duration.ofHours(1)))
+                .body(statViewService.getStatView(username, showVisitors));
     }
 
     @PostMapping("/auth/token")
