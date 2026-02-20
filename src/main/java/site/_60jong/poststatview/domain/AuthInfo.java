@@ -1,11 +1,10 @@
 package site._60jong.poststatview.domain;
 
-
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
+import site._60jong.poststatview.util.TokenEncryptConverter;
 
 import javax.persistence.*;
 
@@ -18,6 +17,8 @@ public class AuthInfo {
     private Long id;
 
     private String username;
+
+    @Convert(converter = TokenEncryptConverter.class)
     @Column(length = 511)
     private String refreshToken;
 

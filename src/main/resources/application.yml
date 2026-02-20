@@ -36,3 +36,5 @@ view:
     made-image:
   font:
 
+encryption:
+  secret-key: ${ENCRYPTION_KEY}
