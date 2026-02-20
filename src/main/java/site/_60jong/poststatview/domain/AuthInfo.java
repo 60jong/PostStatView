@@ -30,11 +30,7 @@ public class AuthInfo {
         return StringUtils.hasText(this.refreshToken);
     }
 
-    public void registerToken(String token) {
-        this.refreshToken = token;
-    }
-
-    public void changeToken(String refreshToken) {
+    public void updateRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 }

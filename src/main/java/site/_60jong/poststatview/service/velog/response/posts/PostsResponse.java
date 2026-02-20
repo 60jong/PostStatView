@@ -10,7 +10,9 @@ public class PostsResponse {
     private List<PostInfo> posts;
 
     public PostInfo getLastPostInfo() {
-
+        if (posts == null || posts.isEmpty()) {
+            throw new IllegalStateException("No posts available");
+        }
         return posts.get(posts.size() - 1);
     }
 

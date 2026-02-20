@@ -28,8 +28,6 @@ public class VelogStatServiceV2 {
     private final VelogRestTemplate velogRestTemplate;
     private final ObjectMapper om;
 
-    // TODO : refactoring
-    // TODO : trace processing time by aop
     /**
      * 유저의 모든 게시글 id를 조회
      */
@@ -67,11 +65,15 @@ public class VelogStatServiceV2 {
                 String tokenExpression = cookie.split(";")[0];
                 String[] tokenTypeAndValue = tokenExpression.split("=");
 
+                if (tokenTypeAndValue.length < 2) {
+                    continue;
+                }
+
                 final String tokenType = tokenTypeAndValue[0];
                 final String tokenValue = tokenTypeAndValue[1];
 
                 if (tokenType.equals("refresh_token")) {
-                    authInfo.changeToken(tokenValue);
+                    authInfo.updateRefreshToken(tokenValue);
                 }
             }
         }

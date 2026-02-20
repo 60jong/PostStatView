@@ -21,10 +21,6 @@ public class VelogStatRequestBody {
         return new VelogStatRequestBodyBuilder(new VelogStatRequestBody());
     }
 
-    public boolean isBatched() {
-        return false;
-    }
-
     //== Builder ==//
     public static class VelogStatRequestBodyBuilder {
 

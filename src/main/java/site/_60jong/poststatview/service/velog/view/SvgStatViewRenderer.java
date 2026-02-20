@@ -16,7 +16,7 @@ public class SvgStatViewRenderer {
     public String render(VelogStatViewParam param) {
         // 1. 레이아웃 계산
         LayoutMetrics metrics = calculateLayoutMetrics(param);
-        String tagsSvg = renderTags(param.getTagNames(), metrics);
+        String tagsSvg = renderTags(param.tagNames(), metrics);
 
         // 2. SVG 템플릿에 데이터 삽입
         return """
@@ -60,13 +60,13 @@ public class SvgStatViewRenderer {
                 VISITOR_ICON.formatted(metrics.visitorsLocationX() - ICON_OFFSET),
                 metrics.usernameLocationX(),
                 TEXT_Y,
-                param.getUsername(),
+                param.username(),
                 metrics.postsLocationX(),
                 TEXT_Y,
-                param.getPosts(),
+                param.posts(),
                 metrics.visitorsLocationX(),
                 TEXT_Y,
-                param.getVisitors(),
+                param.visitors(),
                 tagsSvg
         );
     }
@@ -104,9 +104,9 @@ public class SvgStatViewRenderer {
     }
 
     private LayoutMetrics calculateLayoutMetrics(VelogStatViewParam param) {
-        double usernameWidth = StatViewUtil.getTextLength(param.getUsername(), FONT_DEFAULT);
-        double postsWidth = StatViewUtil.getTextLength(String.valueOf(param.getPosts()), FONT_DEFAULT);
-        double visitorsWidth = StatViewUtil.getTextLength(String.valueOf(param.getVisitors()), FONT_DEFAULT);
+        double usernameWidth = StatViewUtil.getTextLength(param.username(), FONT_DEFAULT);
+        double postsWidth = StatViewUtil.getTextLength(String.valueOf(param.posts()), FONT_DEFAULT);
+        double visitorsWidth = StatViewUtil.getTextLength(String.valueOf(param.visitors()), FONT_DEFAULT);
 
         double usernameLocationX = LEFT_PADDING;
         double postsLocationX = usernameLocationX + usernameWidth + SECTION_GAP;

@@ -18,7 +18,8 @@ public class VelogStatControllerV2 {
 
     @GetMapping("/visitors/comparison")
     public String getVisitors(final @RequestParam String username, Model model) {
-        final AuthInfo authInfo = authService.findByUsername(username);
+        final AuthInfo authInfo = authService.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
 
         // Mono
         long startMono = System.currentTimeMillis();

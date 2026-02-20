@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
@@ -12,15 +13,10 @@ public class GetStatsResponses {
     private List<GetStatsResponse> responses;
 
     public int getTotalVisitors() {
-        int totalVisitors = 0;
-
-        for (GetStatsResponse resp : this.responses) {
-            PostStats stats = resp.getGetStats();
-            if (stats  == null) {
-                break;
-            }
-            totalVisitors += stats.getTotal();
-        }
-        return totalVisitors;
+        return responses.stream()
+                .map(GetStatsResponse::getGetStats)
+                .filter(Objects::nonNull)
+                .mapToInt(PostStats::getTotal)
+                .sum();
     }
 }

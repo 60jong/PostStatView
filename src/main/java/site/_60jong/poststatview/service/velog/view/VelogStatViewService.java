@@ -52,14 +52,8 @@ public class VelogStatViewService {
     }
 
     private AuthInfo getAuthInfo(String username) {
-        if (authService.existsByUsername(username)) {
-            return authService.findByUsername(username);
-        }
-        return createAuthInfoByUsername(username);
-    }
-
-    private AuthInfo createAuthInfoByUsername(String username) {
-        return authService.createAuthInfo(username, null);
+        return authService.findByUsername(username)
+                .orElseGet(() -> authService.createAuthInfo(username, null));
     }
 
     private List<String> extractTopTagNames(List<PostInfo> postInfos, int n) {
